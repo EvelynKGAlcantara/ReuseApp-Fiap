@@ -40,6 +40,34 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
         }}
       />
+      <Tabs.Screen
+        name="rating-example"
+        options={{
+          title: 'Avaliações',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="star.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="input-examples"
+        options={{
+          title: 'Inputs',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="textbox" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="categories-example"
+        options={{
+          title: 'Categorias',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="list.bullet" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="message-example"
+        options={{
+          title: 'Mensagens',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="message.fill" color={color} />,
+        }}
+      />
     </Tabs>
   );
 }
