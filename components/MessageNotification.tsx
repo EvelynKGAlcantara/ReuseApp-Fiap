@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Theme from '../constants/Theme';
 
@@ -10,6 +10,8 @@ type MessageNotificationProps = {
   timeAgo: string;
   onViewMessage?: () => void;
   senderAvatar?: string;
+  iconName?: string;
+  iconColor?: string;
 };
 
 const MessageNotification = ({
@@ -19,6 +21,8 @@ const MessageNotification = ({
   timeAgo = "11 horas atrás",
   onViewMessage = () => console.log('Ver mensagem'),
   senderAvatar,
+  iconName,
+  iconColor,
 }: MessageNotificationProps) => {
   return (
     <View style={styles.container}>
@@ -62,13 +66,22 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 16,
     marginVertical: 8,
-    shadowColor: Theme.colors.gray[900],
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
     borderWidth: 1,
     borderColor: Theme.colors.gray[100],
+    ...Platform.select({
+      ios: {
+        shadowColor: Theme.colors.gray[900],
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.05,
+        shadowRadius: 2,
+      },
+      android: {
+        elevation: 1,
+      },
+      web: {
+        boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.05)',
+      },
+    }),
   },
   contentContainer: {
     flex: 1,
@@ -129,11 +142,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     alignSelf: 'flex-end',
     marginTop: 4,
-    shadowColor: Theme.colors.primary[900],
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 2,
+    ...Platform.select({
+      ios: {
+        shadowColor: Theme.colors.primary[900],
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+      },
+      android: {
+        elevation: 2,
+      },
+      web: {
+        boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)',
+      },
+    }),
   },
   viewButtonText: {
     color: Theme.colors.gray[50],

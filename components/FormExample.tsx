@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Alert, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import CustomInput from './CustomInput';
 import Theme from '../constants/Theme';
@@ -380,12 +380,21 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     paddingVertical: 24,
     paddingHorizontal: 16,
-    shadowColor: colors.gray[900],
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
     marginBottom: 20,
+    ...Platform.select({
+      ios: {
+        shadowColor: colors.gray[900],
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 3,
+      },
+      web: {
+        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+      },
+    }),
   },
   title: {
     fontSize: 24,

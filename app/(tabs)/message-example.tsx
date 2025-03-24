@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Platform } from 'react-native';
 import MessageNotification from '../../components/MessageNotification';
 import Theme from '../../constants/Theme';
 
@@ -94,12 +94,21 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
-    shadowColor: Theme.colors.gray[900],
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
     marginBottom: 8,
+    ...Platform.select({
+      ios: {
+        shadowColor: Theme.colors.gray[900],
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 3,
+      },
+      web: {
+        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+      },
+    }),
   },
   title: {
     fontSize: 28,

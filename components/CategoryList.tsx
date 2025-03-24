@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Theme from '../constants/Theme';
 
@@ -198,11 +198,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
-    shadowColor: Theme.colors.gray[600],
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
     elevation: 1,
+    ...Platform.select({
+      ios: {
+        shadowColor: Theme.colors.gray[600],
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.05,
+        shadowRadius: 2,
+      },
+      android: {
+        elevation: 1,
+      },
+      web: {
+        boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.05)',
+      },
+    }),
   },
   categoryName: {
     fontSize: 10,

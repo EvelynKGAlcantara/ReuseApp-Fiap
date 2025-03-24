@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import CustomInput from '../../components/CustomInput';
 import FormExample from '../../components/FormExample';
 import { Ionicons } from '@expo/vector-icons';
@@ -447,11 +447,20 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.gray[50],
     padding: 16,
     borderRadius: 12,
-    shadowColor: Theme.colors.gray[800],
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    ...Platform.select({
+      ios: {
+        shadowColor: Theme.colors.gray[800],
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 3,
+      },
+      web: {
+        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+      },
+    }),
   },
   sectionTitle: {
     fontSize: 18,
@@ -464,11 +473,20 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
-    shadowColor: Theme.colors.gray[800],
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 5,
+    ...Platform.select({
+      ios: {
+        shadowColor: Theme.colors.gray[800],
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 8,
+      },
+      android: {
+        elevation: 5,
+      },
+      web: {
+        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)',
+      },
+    }),
   },
   modernButton: {
     backgroundColor: Theme.colors.primary[600],
@@ -477,11 +495,20 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 16,
-    shadowColor: Theme.colors.primary[800],
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 2,
+    ...Platform.select({
+      ios: {
+        shadowColor: Theme.colors.primary[800],
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 2,
+      },
+      web: {
+        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+      },
+    }),
   },
   modernButtonText: {
     color: Theme.colors.gray[50],
