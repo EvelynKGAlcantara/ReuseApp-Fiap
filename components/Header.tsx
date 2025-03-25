@@ -1,7 +1,7 @@
 import { Heading } from "@/components/ui/heading";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
-import { StatusBar, View } from "react-native";
+import { View } from "react-native";
 import { Button } from "./ui/button";
 import { Text } from "./ui/text";
 
@@ -15,7 +15,6 @@ export function Header() {
         height: 88,
         paddingTop: 40,
       }}>
-        <StatusBar barStyle="light-content" backgroundColor="blue" />
         <View style={{
         width: '100%',
         display: 'flex',
