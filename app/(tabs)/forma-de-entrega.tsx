@@ -1,8 +1,10 @@
+import AvatarPicker from "@/components/ImageUpload";
 import CustomButton from "@/components/CustomButton";
 import DeliveryOptionCard from "@/components/DeliveryOption";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { View, FlatList } from "react-native";
+import ImageUpload from "@/components/ImageUpload";
 
 const deliveryOptions = [
   {
@@ -74,6 +76,7 @@ const DeliverySelectionScreen = () => {
         disabled
         icon={<Ionicons name="arrow-forward-outline" size={20} color="#fff" />}
       />
+      <ImageUpload />
     </View>
   );
 };
