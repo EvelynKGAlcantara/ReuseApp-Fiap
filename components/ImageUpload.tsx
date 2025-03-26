@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Modal,
-  Button,
+  Text,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { FontAwesome } from "@expo/vector-icons";
@@ -73,10 +73,38 @@ const ImageUpload = () => {
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalView}>
-          <Button title="Câmera" onPress={() => pickImage("camera")} />
-          <Button title="Galeria" onPress={() => pickImage("gallery")} />
-          {image && <Button title="Remover Imagem" onPress={removeImage} />}
-          <Button title="Cancelar" onPress={() => setModalVisible(false)} />
+          <Text style={styles.modalTitle}>Selecione a imagem</Text>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => pickImage("camera")}
+            >
+              <FontAwesome name="camera" size={24} color="#F9B023" />
+              <Text style={styles.buttonText}>Câmera</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => pickImage("gallery")}
+            >
+              <FontAwesome name="image" size={24} color="#F9B023" />
+              <Text style={styles.buttonText}>Galeria</Text>
+            </TouchableOpacity>
+            {image && (
+              <TouchableOpacity
+                style={styles.modalButton}
+                onPress={removeImage}
+              >
+                <FontAwesome name="trash" size={24} color="red" />
+                <Text style={styles.buttonText}>Remover</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+          <TouchableOpacity
+            style={styles.cancelButton}
+            onPress={() => setModalVisible(false)}
+          >
+            <Text style={styles.cancelButtonText}>Cancel</Text>
+          </TouchableOpacity>
         </View>
       </Modal>
     </View>
@@ -105,8 +133,8 @@ const styles = StyleSheet.create({
   modalView: {
     margin: 20,
     backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
+    borderRadius: 10,
+    padding: 20,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -116,6 +144,39 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+    marginBottom: 20,
+  },
+  modalButton: {
+    alignItems: "center",
+    padding: 10,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 8,
+    width: 80,
+  },
+  buttonText: {
+    marginTop: 5,
+    fontSize: 12,
+  },
+  cancelButton: {
+    backgroundColor: "#f0f0f0",
+    padding: 12,
+    borderRadius: 8,
+    width: "100%",
+    alignItems: "center",
+  },
+  cancelButtonText: {
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 
