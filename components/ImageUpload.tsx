@@ -55,16 +55,24 @@ const ImageUpload = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => setModalVisible(true)}
-        style={styles.imageContainer}
-      >
-        {image ? (
-          <Image source={{ uri: image }} style={styles.image} />
-        ) : (
-          <FontAwesome name="camera" size={30} color="#555" />
-        )}
-      </TouchableOpacity>
+      <View style={styles.imageAndButtonContainer}>
+        <TouchableOpacity
+          onPress={() => setModalVisible(true)}
+          style={styles.imageContainer}
+        >
+          {image ? (
+            <Image source={{ uri: image }} style={styles.image} />
+          ) : (
+            <FontAwesome name="camera" size={30} color="#555" />
+          )}
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setModalVisible(true)}
+          style={styles.uploadButton}
+        >
+          <FontAwesome name="camera" size={24} color="#FFF" />
+        </TouchableOpacity>
+      </View>
 
       <Modal
         animationType="slide"
@@ -116,6 +124,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  imageAndButtonContainer: {
+    flexDirection: "row",
+    alignItems: "flex-end", // Alinha os itens na parte inferior
+    justifyContent: "center", // Centraliza horizontalmente
+  },
   imageContainer: {
     width: 150,
     height: 150,
@@ -129,6 +142,16 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     borderRadius: 75,
+  },
+  uploadButton: {
+    backgroundColor: "#F9B023",
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: -25, // Move o botão para a esquerda para sobrepor a imagem
+    marginBottom: 0, // Remove o espaçamento inferior
   },
   modalView: {
     margin: 20,
