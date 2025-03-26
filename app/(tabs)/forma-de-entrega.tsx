@@ -1,4 +1,6 @@
+import CustomButton from "@/components/CustomButton";
 import DeliveryOptionCard from "@/components/DeliveryOption";
+import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { View, FlatList } from "react-native";
 
@@ -47,6 +49,30 @@ const DeliverySelectionScreen = () => {
             onEdit={handleEdit}
           />
         )}
+      />
+
+      <CustomButton
+        title="Clique Aqui"
+        onPress={() => alert("Botão Pressionado!")}
+        icon={<Ionicons name="arrow-forward-outline" size={20} color="#fff" />}
+      />
+
+      <CustomButton
+        title="Botão Azul"
+        onPress={() => alert("Outro botão!")}
+        backgroundColor="#1E88E5"
+        borderColor="#1565C0"
+        textColor="#fff"
+        icon={<Ionicons name="arrow-forward-outline" size={20} color="#fff" />}
+      />
+
+      <CustomButton
+        title="Botão Desativado"
+        onPress={() => {}}
+        backgroundColor="#CCC"
+        textColor="#888"
+        disabled
+        icon={<Ionicons name="arrow-forward-outline" size={20} color="#fff" />}
       />
     </View>
   );
