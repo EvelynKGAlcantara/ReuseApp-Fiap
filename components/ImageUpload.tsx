@@ -111,7 +111,7 @@ const ImageUpload = () => {
             style={styles.cancelButton}
             onPress={() => setModalVisible(false)}
           >
-            <Text style={styles.cancelButtonText}>Cancel</Text>
+            <Text style={styles.cancelButtonText}>Cancelar</Text>
           </TouchableOpacity>
         </View>
       </Modal>
