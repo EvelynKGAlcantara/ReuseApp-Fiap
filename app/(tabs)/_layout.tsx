@@ -4,16 +4,18 @@ import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
+import { FontAwesome } from '@expo/vector-icons';
 import Theme from '@/constants/Theme';
 
 export default function TabLayout() {
+  // const colorScheme = useColorScheme();
+
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Theme.colors.primary[600],
-        tabBarInactiveTintColor: Theme.colors.gray[600],
+        tabBarActiveTintColor: "yellow",
+        tabBarInactiveTintColor: "white",
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
@@ -21,36 +23,46 @@ export default function TabLayout() {
           ios: {
             // Use a transparent background on iOS to show the blur effect
             position: 'absolute',
+            backgroundColor: 'blue',
           },
-          default: {},
+          default: {
+            backgroundColor: 'blue',
+          },
         }),
       }}>
       <Tabs.Screen
         name="index"
         options={{
           title: 'Início',
-          tabBarIcon: ({ color }) => <Ionicons name="home-outline" size={24} color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="minhas-publicacoes"
+        name="search"
         options={{
-          title: 'Minhas Publicações',
-          tabBarIcon: ({ color }) => <Ionicons name="list-outline" size={24} color={color} />,
+          title: 'Pesquisar',
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="search" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="mensagens"
+        name="publications"
         options={{
-          title: 'Mensagens',
-          tabBarIcon: ({ color }) => <Ionicons name="chatbubble-outline" size={24} color={color} />,
+          title: 'Publicações',
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="heart-o" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="perfil"
+        name="trades"
         options={{
-          title: 'Perfil',
-          tabBarIcon: ({ color }) => <Ionicons name="person-outline" size={24} color={color} />,
+          title: 'Trocas',
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="exchange" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="data"
+        options={{
+          title: 'Meus dados',
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="user-circle-o" color={color} />,
         }}
       />
     </Tabs>

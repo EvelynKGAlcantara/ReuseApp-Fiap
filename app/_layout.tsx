@@ -1,15 +1,18 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import "@/global.css";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
+import "@/global.css";
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
+// import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 
+import { Header } from '@/components/Header';
+import { TabsComponent } from "@/components/TabsComponent";
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { StatusBar } from "react-native";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -52,7 +55,10 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <GluestackUIProvider mode="light"><ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <GluestackUIProvider mode="light">
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Header />
+        <TabsComponent />
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="registro" options={{ title: 'Cadastre-se', headerBackTitle: 'Voltar' }} />
@@ -62,7 +68,8 @@ function RootLayoutNav() {
           <Stack.Screen name="location-test" options={{ title: 'Teste de Localização', headerBackTitle: 'Voltar' }} />
           <Stack.Screen name="product-details" options={{ headerShown: false }} />
         </Stack>
-        <StatusBar style="auto" />
-      </ThemeProvider></GluestackUIProvider>
+        <StatusBar barStyle="light-content" backgroundColor="blue" />
+      </ThemeProvider>
+    </GluestackUIProvider>
   );
 }
