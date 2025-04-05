@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
   Animated,
+  Dimensions,
 } from "react-native";
 
 type ToggleSwitchProps = {
@@ -18,12 +19,15 @@ export const ToggleSwitch = ({
   selectedOption,
   onSelect,
 }: ToggleSwitchProps) => {
+  const screenWidth = Dimensions.get("window").width;
+  const buttonWidth = screenWidth * 0.45;
+
+  const translateX = useRef(new Animated.Value(0)).current;
   const selectedIndex = options.indexOf(selectedOption);
-  const translateX = useRef(new Animated.Value(selectedIndex * 100)).current;
 
   useEffect(() => {
     Animated.timing(translateX, {
-      toValue: selectedIndex * 100,
+      toValue: selectedIndex * buttonWidth,
       duration: 200,
       useNativeDriver: true,
     }).start();
@@ -58,7 +62,6 @@ export const ToggleSwitch = ({
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
     marginVertical: 10,
   },
   toggleContainer: {

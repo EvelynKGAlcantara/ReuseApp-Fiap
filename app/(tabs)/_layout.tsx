@@ -47,6 +47,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="home-page"
+        options={{
+          title: "Home Page",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="alert-circle" size={24} color={color} />
+          ),
+        }}
+      />
       {/* <Tabs.Screen
         name="index"
         options={{
