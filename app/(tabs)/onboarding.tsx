@@ -7,8 +7,10 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import CustomButton from "@/components/CustomButton";
+import { router, useRouter } from "expo-router";
+import Logo from "../components/logoReuse";
 
 const { width } = Dimensions.get("window");
 
@@ -35,6 +37,9 @@ const slides = [
 export default function OnboardingScreen() {
   const flatListRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const handlePular = () => {
+    router.replace("/(tabs)/selecione-cidade");
+  };
 
   const handleScroll = (event: {
     nativeEvent: { contentOffset: { x: number } };
@@ -45,7 +50,9 @@ export default function OnboardingScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Parte de cima: FlatList */}
+      <View style={styles.logoContainer}>
+        <Logo />
+      </View>
       <View style={styles.topContent}>
         <FlatList
           ref={flatListRef}
@@ -64,7 +71,6 @@ export default function OnboardingScreen() {
         />
       </View>
 
-      {/* Parte de baixo fixa: indicadores + botões */}
       <View style={styles.bottomArea}>
         <View style={styles.indicatorContainer}>
           {slides.map((_, index) => (
@@ -82,7 +88,7 @@ export default function OnboardingScreen() {
           <View>
             <CustomButton
               title="Pular"
-              onPress={() => alert("Botão Pressionado!")}
+              onPress={handlePular}
               borderColor="#FFFFFF"
               backgroundColor="#FFFFFF"
               textColor="#2A4BA0"
@@ -112,10 +118,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#FFF",
     textAlign: "left",
-    marginTop: 20,
+    marginTop: 60,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 18,
     color: "#FFF",
     textAlign: "left",
     fontWeight: "200",
@@ -129,7 +135,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     marginTop: 10,
-    marginBottom: 340,
+    marginBottom: 280,
   },
   indicator: {
     width: 8,
@@ -144,5 +150,12 @@ const styles = StyleSheet.create({
   },
   buttonArea: {
     gap: 12,
+  },
+  logoContainer: {
+    position: "absolute",
+    top: 40,
+    left: 20,
+    bottom: 30,
+    zIndex: 10,
   },
 });
