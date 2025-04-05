@@ -12,6 +12,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { ItemCard } from "../components/cards/card-produto";
 import { LocationBox } from "../components/buttons/botao-localizacao";
+import { SearchWithFilter } from "../components/buttons/busca-filtragem";
 
 type Categoria = {
   id: number;
@@ -58,7 +59,8 @@ const categories = [
 const products = new Array(6).fill({
   title: "Gradient Graphic T-shirt",
   description: "Descrição do produto",
-  imageUri: "../../assets/images/images-telas/camiseta.jpg",
+  imageUri:
+    "https://images.pexels.com/photos/3757055/pexels-photo-3757055.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
   rating: 4.5,
 });
 
@@ -135,11 +137,10 @@ export default function HomePage() {
           ))}
         </ScrollView>
 
-        <View style={styles.searchContainer}>
-          <Ionicons name="search" size={20} color="#666" />
-          <TextInput
-            placeholder="Buscar por itens (Ex: Tênis Nike)"
-            style={styles.searchInput}
+        <View style={styles.filtercontent}>
+          <SearchWithFilter
+            onSearchChange={(text) => console.log("Busca:", text)}
+            onFilterPress={() => console.log("Filtro pressionado")}
           />
         </View>
 
@@ -172,6 +173,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     paddingHorizontal: 20,
     paddingTop: 30,
+    paddingBottom: 30,
   },
   greeting: {
     fontSize: 18,
@@ -241,8 +243,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginBottom: 4,
   },
+
   categoriaNome: {
     fontSize: 12,
     color: "#555",
+  },
+  filtercontent: {
+    marginBottom: 30,
   },
 });
