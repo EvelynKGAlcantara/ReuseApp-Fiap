@@ -59,6 +59,9 @@ function RootLayoutNav() {
           <Stack.Screen name="confirmacao" options={{ title: 'Confirmação', headerBackTitle: 'Voltar' }} />
           <Stack.Screen name="cadastro-sucesso" options={{ title: 'Sucesso', headerBackTitle: 'Voltar' }} />
           <Stack.Screen name="login" options={{ title: 'Login', headerBackTitle: 'Voltar' }} />
+          <Stack.Screen name="location-test" options={{ title: 'Teste de Localização', headerBackTitle: 'Voltar' }} />
+          <Stack.Screen name="product-details" options={{ headerShown: false }} />
+          <Stack.Screen name="profile" options={{ headerShown: false }} />
         </Stack>
         <StatusBar style="auto" />
       </ThemeProvider></GluestackUIProvider>

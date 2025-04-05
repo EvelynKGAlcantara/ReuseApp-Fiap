@@ -6,17 +6,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import Theme from '@/constants/Theme';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        tabBarInactiveTintColor: '#888',
+        tabBarActiveTintColor: Theme.colors.primary[600],
+        tabBarInactiveTintColor: Theme.colors.gray[600],
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
@@ -54,13 +51,6 @@ export default function TabLayout() {
         options={{
           title: 'Perfil',
           tabBarIcon: ({ color }) => <Ionicons name="person-outline" size={24} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="notificacoes"
-        options={{
-          title: 'Notificações',
-          tabBarButton: () => null, // Não mostrar na barra de navegação
         }}
       />
     </Tabs>

@@ -4,6 +4,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { Link, router } from 'expo-router';
 
 export default function HomeScreen() {
+  const navigateToProfile = () => {
+    router.push('/profile');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
@@ -31,6 +35,20 @@ export default function HomeScreen() {
         >
           <Text style={styles.buttonText}>Ver publicações</Text>
           <Ionicons name="arrow-forward" size={20} color="#fff" />
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => router.push('/product-details')}
+        >
+          <Text style={styles.buttonText}>Ver Detalhes do Produto</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={navigateToProfile}
+        >
+          <Text style={styles.buttonText}>Ver Perfil</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
