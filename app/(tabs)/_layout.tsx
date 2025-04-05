@@ -39,6 +39,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="item-de-categoria"
+        options={{
+          title: "Item de uma categoria",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="alert-circle" size={24} color={color} />
+          ),
+        }}
+      />
+      {/* <Tabs.Screen
         name="index"
         options={{
           title: "Início",
@@ -83,8 +92,9 @@ export default function TabLayout() {
             <Ionicons name="person-outline" size={24} color={color} />
           ),
         }}
-      />
-      <Tabs.Screen
+      /> */}
+
+      {/* <Tabs.Screen
         name="forma-de-entrega"
         options={{
           title: "Forma de Entrega",
@@ -92,7 +102,7 @@ export default function TabLayout() {
             <Ionicons name="accessibility-outline" size={24} color={color} />
           ),
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="proposals-screen"
         options={{
