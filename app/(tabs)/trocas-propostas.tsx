@@ -11,14 +11,21 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import TabComponent from "@/components/TabComponent";
+import { ItemCard } from "../components/cards/card-produto";
+import { ToggleSwitch } from "../components/buttons/tabs";
 
 export default function ProposalsScreen() {
-  const [selectedTab, setSelectedTab] = useState("propostas");
+  const [selected, setSelected] = useState("Propostas");
+  const [checked, setChecked] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.tabContainer}>
-        <TabComponent />
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ToggleSwitch
+          options={["Propostas", "Suas ofertas"]}
+          selectedOption={selected}
+          onSelect={setSelected}
+        />
       </View>
 
       <ScrollView style={styles.content}>
@@ -26,25 +33,26 @@ export default function ProposalsScreen() {
           As seguintes ofertas foram feitas para você
         </Text>
         <Text style={styles.subTitle}>Propostas Aceitas</Text>
-
-        <View style={styles.card}>
-          <Image
-            source={{ uri: "https://via.placeholder.com/150" }}
-            style={styles.productImage}
-          />
-          <View style={styles.cardContent}>
-            <View style={styles.ratingContainer}>
-              <Ionicons name="star" size={16} color="#FFD700" />
-              <Text style={styles.rating}>4.5 / 5</Text>
-            </View>
-            <Text style={styles.productTitle}>Gradient Graphic T-shirt</Text>
-            <Text style={styles.status}>PROPOSTA ACEITA</Text>
-            <Text style={styles.description}>
-              Tá novinha. Terminei com a namorada e preciso trocar por outra.
-              Esse é o motivo.
-            </Text>
-          </View>
-        </View>
+        <ItemCard
+          imageSource={{ uri: "https://via.placeholder.com/300x150" }}
+          ratingComponent={
+            <>
+              {/* Trocar por componente criado pela Isabelle */}
+              <Ionicons name="star" size={16} color="gold" />
+              <Ionicons name="star" size={16} color="gold" />
+              <Ionicons name="star" size={16} color="gold" />
+              <Ionicons name="star" size={16} color="gold" />
+              <Ionicons name="star-half" size={16} color="gold" />
+              <Text style={{ marginLeft: 5 }}>4.5/5</Text>
+            </>
+          }
+          title="Gradient Graphic T-shirt"
+          status="PROPOSTA ACEITA"
+          description="Tá novinha. Terminei com a namorada e preciso trocar por outra. Esse é o motivo."
+          showCheckbox
+          checked={checked}
+          onCheckChange={() => setChecked(!checked)}
+        />
       </ScrollView>
     </SafeAreaView>
   );

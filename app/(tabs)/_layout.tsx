@@ -43,7 +43,16 @@ export default function TabLayout() {
         options={{
           title: "Início",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="home-outline" size={24} color={color} />
+            <Ionicons name="home-sharp" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="trocas-propostas"
+        options={{
+          title: "Trocas e Propostas",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="person-outline" size={24} color={color} />
           ),
         }}
       />
@@ -65,7 +74,8 @@ export default function TabLayout() {
           ),
         }}
       />
-      {/* <Tabs.Screen
+
+      <Tabs.Screen
         name="perfil"
         options={{
           title: "Perfil",
@@ -118,14 +128,14 @@ export default function TabLayout() {
             <Ionicons name="person-outline" size={24} color={color} />
           ),
         }}
-      /> */}
-      {/* <Tabs.Screen
+      />
+      <Tabs.Screen
         name="notificacoes"
         options={{
           title: "Notificações",
           tabBarButton: () => null, // Não mostrar na barra de navegação
         }}
-      /> */}
+      />
     </Tabs>
   );
 }
