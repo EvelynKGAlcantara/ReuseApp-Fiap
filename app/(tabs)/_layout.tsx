@@ -30,6 +30,15 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
+        name="onboarding"
+        options={{
+          title: "Onboarding",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="home-outline" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="index"
         options={{
           title: "Início",
@@ -56,7 +65,7 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="perfil"
         options={{
           title: "Perfil",
@@ -75,12 +84,48 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="proposals-screen"
+        options={{
+          title: "Propostas",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="person-outline" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="configurar-notificacoes"
+        options={{
+          title: "Configurar Notificações",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="person-outline" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="meus-dados"
+        options={{
+          title: "Meus dados",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="person-outline" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="publicar-item"
+        options={{
+          title: "Publicar Itens",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="person-outline" size={24} color={color} />
+          ),
+        }}
+      /> */}
+      {/* <Tabs.Screen
         name="notificacoes"
         options={{
           title: "Notificações",
           tabBarButton: () => null, // Não mostrar na barra de navegação
         }}
-      />
+      /> */}
     </Tabs>
   );
 }
