@@ -79,7 +79,7 @@ export default function OnboardingScreen() {
         </View>
 
         <View style={styles.buttonArea}>
-          <View style={styles.buttonStyle}>
+          <View>
             <CustomButton
               title="Pular"
               onPress={() => alert("Botão Pressionado!")}
