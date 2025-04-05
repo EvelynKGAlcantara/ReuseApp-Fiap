@@ -33,7 +33,6 @@ const slides = [
 ];
 
 export default function OnboardingScreen() {
-  const navigation = useNavigation();
   const flatListRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -145,8 +144,5 @@ const styles = StyleSheet.create({
   },
   buttonArea: {
     gap: 12,
-  },
-  buttonStyle: {
-    // espaçamento entre os botões
   },
 });
