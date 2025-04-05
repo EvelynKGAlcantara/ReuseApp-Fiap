@@ -1,88 +1,51 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity, SafeAreaView, ScrollView, Platform, Text, StatusBar, Image } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, SafeAreaView, ScrollView, Platform, Text, StatusBar } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import Theme from '../../constants/Theme';
-
-// URLs de imagens remotas (placeholders)
-const IMAGES = {
-  sofa: { uri: 'https://picsum.photos/200/150' },
-  bag: { uri: 'https://picsum.photos/200/150' }
-};
-
-// Componente de produto
-const ProductCard = ({ 
-  image, 
-  title, 
-  location, 
-  rating 
-}: { 
-  image: { uri: string }, 
-  title: string, 
-  location: string, 
-  rating: number 
-}) => {
-  const [imageError, setImageError] = React.useState(false);
-
-  const renderStars = (rating: number) => {
-    return (
-      <View style={styles.starsContainer}>
-        {[1, 2, 3, 4, 5].map((star) => (
-          <Ionicons
-            key={star}
-            name={star <= rating ? "star" : "star-outline"}
-            size={12}
-            color="#F9B023"
-            style={{ marginRight: 2 }}
-          />
-        ))}
-      </View>
-    );
-  };
-
-  return (
-    <TouchableOpacity style={styles.productCard}>
-      {imageError ? (
-        <View style={styles.productImageContainer}>
-          <Ionicons name="image-outline" size={48} color="#A9B4BC" />
-        </View>
-      ) : (
-        <View style={styles.productImageContainer}>
-          <Image
-            source={image}
-            style={styles.productImage}
-            resizeMode="cover"
-            onError={() => setImageError(true)}
-          />
-        </View>
-      )}
-      <View style={styles.productInfo}>
-        {renderStars(rating)}
-        <Text style={styles.productTitle}>{title}</Text>
-        <Text style={styles.productLocation}>{location}</Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
 
 export default function PerfilScreen() {
   const handleLogout = () => {
     router.replace('/login');
   };
 
+  // Função para renderizar estrelas de avaliação
+  const renderStars = (rating: number) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <Ionicons
+          key={i}
+          name={i <= Math.floor(rating) ? "star" : "star-outline"}
+          size={12}
+          color="#F9B023"
+          style={{ marginRight: 2 }}
+        />
+      );
+    }
+    return <View style={styles.starsContainer}>{stars}</View>;
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar backgroundColor="#2A4BA0" barStyle="light-content" />
+      <StatusBar 
+        backgroundColor="#2A4BA0" 
+        barStyle="light-content"
+        translucent={false}
+      />
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity 
             onPress={() => router.back()}
             style={styles.headerButton}
+            activeOpacity={0.7}
           >
             <Ionicons name="chevron-back" size={24} color="#FFFFFF" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Perfil</Text>
-          <TouchableOpacity style={styles.notificationButton}>
+          <TouchableOpacity 
+            style={styles.notificationButton}
+            activeOpacity={0.7}
+          >
             <Ionicons name="notifications-outline" size={20} color="#1B262E" />
             <View style={styles.notificationBadge}>
               <Text style={styles.notificationBadgeText}>2</Text>
@@ -130,18 +93,27 @@ export default function PerfilScreen() {
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.productsRow}
             >
-              <ProductCard
-                image={IMAGES.sofa}
-                title="Sofá 3 Lugares Cinza"
-                location="São Paulo, SP"
-                rating={4.5}
-              />
-              <ProductCard
-                image={IMAGES.bag}
-                title="Bolsa de Couro"
-                location="Rio de Janeiro, RJ"
-                rating={4.0}
-              />
+              <TouchableOpacity style={styles.productCard} activeOpacity={0.7}>
+                <View style={[styles.productImageContainer, { backgroundColor: "#4CAF50" }]}>
+                  <Ionicons name="bed-outline" size={48} color="#FFFFFF" />
+                </View>
+                <View style={styles.productInfo}>
+                  {renderStars(4.5)}
+                  <Text style={styles.productTitle}>Sofá 3 Lugares Cinza</Text>
+                  <Text style={styles.productLocation}>São Paulo, SP</Text>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.productCard} activeOpacity={0.7}>
+                <View style={[styles.productImageContainer, { backgroundColor: "#2196F3" }]}>
+                  <Ionicons name="restaurant-outline" size={48} color="#FFFFFF" />
+                </View>
+                <View style={styles.productInfo}>
+                  {renderStars(4.0)}
+                  <Text style={styles.productTitle}>Mesa de Jantar</Text>
+                  <Text style={styles.productLocation}>Rio de Janeiro, RJ</Text>
+                </View>
+              </TouchableOpacity>
             </ScrollView>
           </View>
 
@@ -153,41 +125,50 @@ export default function PerfilScreen() {
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.productsRow}
             >
-              <ProductCard
-                image={IMAGES.bag}
-                title="Bolsa de Couro"
-                location="Rio de Janeiro, RJ"
-                rating={4.0}
-              />
-              <ProductCard
-                image={IMAGES.sofa}
-                title="Sofá 3 Lugares Cinza"
-                location="São Paulo, SP"
-                rating={4.5}
-              />
+              <TouchableOpacity style={styles.productCard} activeOpacity={0.7}>
+                <View style={[styles.productImageContainer, { backgroundColor: "#9C27B0" }]}>
+                  <Ionicons name="briefcase-outline" size={48} color="#FFFFFF" />
+                </View>
+                <View style={styles.productInfo}>
+                  {renderStars(4.0)}
+                  <Text style={styles.productTitle}>Bolsa de Couro</Text>
+                  <Text style={styles.productLocation}>Rio de Janeiro, RJ</Text>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.productCard} activeOpacity={0.7}>
+                <View style={[styles.productImageContainer, { backgroundColor: "#FF9800" }]}>
+                  <Ionicons name="footsteps-outline" size={48} color="#FFFFFF" />
+                </View>
+                <View style={styles.productInfo}>
+                  {renderStars(4.5)}
+                  <Text style={styles.productTitle}>Tênis Esportivo</Text>
+                  <Text style={styles.productLocation}>São Paulo, SP</Text>
+                </View>
+              </TouchableOpacity>
             </ScrollView>
           </View>
 
           <View style={styles.menu}>
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity style={styles.menuItem} activeOpacity={0.7}>
               <Ionicons name="settings-outline" size={24} color="#606D76" />
               <Text style={styles.menuItemText}>Configurações</Text>
               <Ionicons name="chevron-forward" size={20} color="#C5CDD2" />
             </TouchableOpacity>
             
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity style={styles.menuItem} activeOpacity={0.7}>
               <Ionicons name="help-circle-outline" size={24} color="#606D76" />
               <Text style={styles.menuItemText}>Ajuda e Suporte</Text>
               <Ionicons name="chevron-forward" size={20} color="#C5CDD2" />
             </TouchableOpacity>
             
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity style={styles.menuItem} activeOpacity={0.7}>
               <Ionicons name="information-circle-outline" size={24} color="#606D76" />
               <Text style={styles.menuItemText}>Sobre o ReUse</Text>
               <Ionicons name="chevron-forward" size={20} color="#C5CDD2" />
             </TouchableOpacity>
             
-            <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
+            <TouchableOpacity style={styles.menuItem} onPress={handleLogout} activeOpacity={0.7}>
               <Ionicons name="log-out-outline" size={24} color="#F44336" />
               <Text style={[styles.menuItemText, styles.logoutText]}>Sair</Text>
               <Ionicons name="chevron-forward" size={20} color="#C5CDD2" />
@@ -215,11 +196,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     backgroundColor: '#2A4BA0',
-    ...Platform.select({
-      android: {
-        paddingTop: StatusBar.currentHeight,
-      },
-    }),
+    ...(Platform.OS === 'android' ? {
+      paddingTop: StatusBar.currentHeight || 12,
+    } : {}),
   },
   headerButton: {
     padding: 8,
@@ -259,6 +238,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
+    paddingBottom: 20,
   },
   perfilInfo: {
     backgroundColor: '#FFFFFF',
@@ -277,14 +257,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#2A4BA0',
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 4,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-      },
+    ...(Platform.OS === 'android' ? {
+      elevation: 4,
+    } : {
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
     }),
   },
   avatarText: {
@@ -343,23 +322,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 12,
     overflow: 'hidden',
-    elevation: 2,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-      },
+    ...(Platform.OS === 'android' ? {
+      elevation: 2,
+    } : {
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
     }),
   },
   productImageContainer: {
     width: '100%',
     height: 150,
-    backgroundColor: '#F8F9FB',
     justifyContent: 'center',
     alignItems: 'center',
-    overflow: 'hidden',
   },
   productInfo: {
     padding: 12,
@@ -398,9 +374,5 @@ const styles = StyleSheet.create({
   },
   logoutText: {
     color: '#F44336',
-  },
-  productImage: {
-    width: '100%',
-    height: '100%',
-  },
+  }
 }); 

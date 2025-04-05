@@ -5,7 +5,7 @@ import { Link, router } from 'expo-router';
 
 export default function HomeScreen() {
   const navigateToProfile = () => {
-    router.push('/profile');
+    router.navigate('perfil');
   };
 
   return (
