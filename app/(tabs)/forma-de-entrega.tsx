@@ -3,8 +3,15 @@ import CustomButton from "@/components/CustomButton";
 import DeliveryOptionCard from "@/components/DeliveryOption";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { View, FlatList } from "react-native";
-import ImageUpload from "@/components/ImageUpload";
+import {
+  View,
+  FlatList,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+} from "react-native";
 
 const deliveryOptions = [
   {
@@ -27,8 +34,30 @@ const deliveryOptions = [
   },
 ];
 
+const shippingOptions = [
+  {
+    id: "correios",
+    title: "Correios",
+    price: "Grátis",
+    delivery: "Entrega em 7 dias",
+  },
+  {
+    id: "loggi",
+    title: "Loggi",
+    price: "R$7,90",
+    delivery: "Entrega em 12 dias",
+  },
+  {
+    id: "jadlog",
+    title: "Jadlog",
+    price: "R$17,90",
+    delivery: "Entrega em 2 dias",
+  },
+];
+
 const DeliverySelectionScreen = () => {
   const [selectedOption, setSelectedOption] = useState<string>("home");
+  const [selectedShipping, setSelectedShipping] = useState<string>("correios");
 
   const handleSelect = (id: string) => {
     setSelectedOption(id);
@@ -39,46 +68,153 @@ const DeliverySelectionScreen = () => {
   };
 
   return (
-    <View style={{ padding: 16 }}>
-      <FlatList
-        data={deliveryOptions}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <DeliveryOptionCard
-            option={item}
-            isSelected={selectedOption === item.id}
-            onSelect={handleSelect}
-            onEdit={handleEdit}
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={{ paddingBottom: 24 }}>
+        <Text style={styles.titulo}>Publicar Item</Text>
+        <View style={styles.headerRow}>
+          <Image
+            source={require("../../assets/images/images-telas/Caminhaozinho.png")}
+            style={styles.iconInline}
+            resizeMode="contain"
           />
-        )}
-      />
+          <View>
+            <Text style={styles.subtitle}>
+              Selecione a melhor {"\n"}forma de envio {"\n"}para seu produto
+            </Text>
+          </View>
+        </View>
 
-      <CustomButton
-        title="Clique Aqui"
-        onPress={() => alert("Botão Pressionado!")}
-        icon={<Ionicons name="arrow-forward-outline" size={20} color="#fff" />}
-      />
+        {/* Endereços */}
+        <FlatList
+          data={deliveryOptions}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <DeliveryOptionCard
+              option={item}
+              isSelected={selectedOption === item.id}
+              onSelect={handleSelect}
+              onEdit={handleEdit}
+            />
+          )}
+          scrollEnabled={false}
+        />
 
-      <CustomButton
-        title="Botão Azul"
-        onPress={() => alert("Outro botão!")}
-        backgroundColor="#1E88E5"
-        borderColor="#1565C0"
-        textColor="#fff"
-        icon={<Ionicons name="arrow-forward-outline" size={20} color="#fff" />}
-      />
+        {/* Botão adicionar endereço */}
+        <TouchableOpacity style={styles.addButton}>
+          <Ionicons name="add-circle-outline" size={20} color="#000" />
+          <Text style={styles.addText}>Adicionar novo endereço</Text>
+        </TouchableOpacity>
 
-      <CustomButton
-        title="Botão Desativado"
-        onPress={() => {}}
-        backgroundColor="#CCC"
-        textColor="#888"
-        disabled
-        icon={<Ionicons name="arrow-forward-outline" size={20} color="#fff" />}
-      />
-      <ImageUpload />
+        {/* Opções de envio */}
+        <View style={styles.shippingContainer}>
+          {shippingOptions.map((option) => (
+            <TouchableOpacity
+              key={option.id}
+              style={[
+                styles.shippingOption,
+                selectedShipping === option.id && styles.shippingOptionSelected,
+              ]}
+              onPress={() => setSelectedShipping(option.id)}
+            >
+              <Ionicons
+                name={
+                  selectedShipping === option.id
+                    ? "radio-button-on"
+                    : "radio-button-off"
+                }
+                size={20}
+                color={selectedShipping === option.id ? "#22408C" : "#888"}
+                style={{ marginRight: 12 }}
+              />
+              <View>
+                <Text style={styles.shippingPrice}>
+                  {option.price}{" "}
+                  <Text style={styles.shippingLabel}>{option.title}</Text>
+                </Text>
+                <Text style={styles.shippingDelivery}>{option.delivery}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        {/* Botões finais */}
+        <View style={styles.buttonArea}>
+          <CustomButton title="Cancelar" onPress={() => {}} />
+          <CustomButton title="Finalizar negociação" onPress={() => {}} />
+        </View>
+      </ScrollView>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#FFF",
+    paddingHorizontal: 16,
+    paddingTop: 16,
+  },
+  headerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    marginBottom: 16,
+  },
+  iconInline: {
+    width: 180,
+    height: 180,
+  },
+  titulo: {
+    fontSize: 32,
+    fontWeight: "bold",
+    marginTop: 30,
+  },
+  subtitle: {
+    fontSize: 18,
+    color: "#666",
+  },
+  addButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 16,
+  },
+  addText: {
+    marginLeft: 8,
+    fontSize: 16,
+    color: "#000",
+  },
+  shippingContainer: {
+    marginBottom: 24,
+  },
+  shippingOption: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  shippingOptionSelected: {
+    borderColor: "#22408C",
+    backgroundColor: "#F0F4FF",
+  },
+  shippingPrice: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  shippingLabel: {
+    fontWeight: "normal",
+    color: "#333",
+  },
+  shippingDelivery: {
+    fontSize: 14,
+    color: "#666",
+  },
+  buttonArea: {
+    gap: 12,
+  },
+});
 
 export default DeliverySelectionScreen;

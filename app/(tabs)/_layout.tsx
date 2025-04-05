@@ -89,7 +89,7 @@ export default function TabLayout() {
         options={{
           title: "Forma de Entrega",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="person-outline" size={24} color={color} />
+            <Ionicons name="accessibility-outline" size={24} color={color} />
           ),
         }}
       />
