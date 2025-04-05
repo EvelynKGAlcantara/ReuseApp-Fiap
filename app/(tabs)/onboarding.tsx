@@ -8,25 +8,27 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import CustomButton from "@/components/CustomButton";
 
 const { width } = Dimensions.get("window");
 
 const slides = [
   {
     id: "1",
-    title: "Tem algo por aí parado? Porque não troca com alguém?",
+    title: "Tem algo aí sem uso? Que tal trocar com alguém?",
     subtitle:
-      "Somos a plataforma brasileira de consumo consciente para trocar.",
+      "Conectamos pessoas para dar um novo destino ao que está parado. Troque, reutilize e consuma com consciência.",
   },
   {
     id: "2",
-    title: "Reduzir os resíduos no mundo",
-    subtitle: "Vamos cuidar do nosso planeta juntos!",
+    title: "Menos resíduos, mais futuro",
+    subtitle: "Juntos, podemos reduzir o impacto no planeta. Vamos nessa?",
   },
   {
     id: "3",
-    title: "Fortalecer a comunidade",
-    subtitle: "Ajude sua comunidade a se desenvolver e conheça novas pessoas",
+    title: "Conecte, compartilhe, fortaleça",
+    subtitle:
+      "Impulsione sua comunidade, faça trocas e conheça pessoas incríveis no caminho.",
   },
 ];
 
@@ -44,33 +46,51 @@ export default function OnboardingScreen() {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        ref={flatListRef}
-        data={slides}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onScroll={handleScroll}
-        renderItem={({ item }) => (
-          <View style={styles.slide}>
-            <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.subtitle}>{item.subtitle}</Text>
-          </View>
-        )}
-        keyExtractor={(item) => item.id}
-      />
-      <View style={styles.indicatorContainer}>
-        {slides.map((_, index) => (
-          <View
-            key={index}
-            style={[
-              styles.indicator,
-              index === currentIndex && styles.activeIndicator,
-            ]}
-          />
-        ))}
+      {/* Parte de cima: FlatList */}
+      <View style={styles.topContent}>
+        <FlatList
+          ref={flatListRef}
+          data={slides}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onScroll={handleScroll}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <View style={styles.slide}>
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.subtitle}>{item.subtitle}</Text>
+            </View>
+          )}
+        />
       </View>
-      <TouchableOpacity onPress={() => {}}></TouchableOpacity>
+
+      {/* Parte de baixo fixa: indicadores + botões */}
+      <View style={styles.bottomArea}>
+        <View style={styles.indicatorContainer}>
+          {slides.map((_, index) => (
+            <View
+              key={index}
+              style={[
+                styles.indicator,
+                index === currentIndex && styles.activeIndicator,
+              ]}
+            />
+          ))}
+        </View>
+
+        <View style={styles.buttonArea}>
+          <View style={styles.buttonStyle}>
+            <CustomButton
+              title="Pular"
+              onPress={() => alert("Botão Pressionado!")}
+              borderColor="#FFFFFF"
+              backgroundColor="#FFFFFF"
+              textColor="#2A4BA0"
+            />
+          </View>
+        </View>
+      </View>
     </View>
   );
 }
@@ -79,32 +99,38 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#22408C",
-    justifyContent: "center",
-    alignItems: "center",
+  },
+  topContent: {
+    flex: 1,
   },
   slide: {
     width: width,
+    paddingTop: 60,
     paddingHorizontal: 20,
-    justifyContent: "center",
-    alignItems: "center",
   },
   title: {
-    fontSize: 26,
+    fontSize: 36,
     fontWeight: "bold",
     color: "#FFF",
     textAlign: "left",
-    marginBottom: 10,
+    marginTop: 20,
   },
   subtitle: {
     fontSize: 16,
     color: "#FFF",
     textAlign: "left",
-    fontWeight: 200,
+    fontWeight: "200",
+    marginTop: 20,
+  },
+  bottomArea: {
+    paddingHorizontal: 20,
+    paddingBottom: 30,
   },
   indicatorContainer: {
     flexDirection: "row",
-    position: "absolute",
-    bottom: 100,
+    justifyContent: "flex-start",
+    marginTop: 10,
+    marginBottom: 340,
   },
   indicator: {
     width: 8,
@@ -115,6 +141,12 @@ const styles = StyleSheet.create({
   },
   activeIndicator: {
     backgroundColor: "#FFF",
-    width: 16,
+    width: 35,
+  },
+  buttonArea: {
+    gap: 12,
+  },
+  buttonStyle: {
+    // espaçamento entre os botões
   },
 });
