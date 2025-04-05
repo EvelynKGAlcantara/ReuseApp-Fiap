@@ -84,7 +84,6 @@ const DeliverySelectionScreen = () => {
           </View>
         </View>
 
-        {/* Endereços */}
         <FlatList
           data={deliveryOptions}
           keyExtractor={(item) => item.id}
@@ -99,13 +98,17 @@ const DeliverySelectionScreen = () => {
           scrollEnabled={false}
         />
 
-        {/* Botão adicionar endereço */}
-        <TouchableOpacity style={styles.addButton}>
-          <Ionicons name="add-circle-outline" size={20} color="#000" />
-          <Text style={styles.addText}>Adicionar novo endereço</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonArea}>
+          <CustomButton
+            title="Adicionar novo endereço"
+            textColor="#000000"
+            backgroundColor="#FFFFFF"
+            borderColor="#CCCCCC"
+            onPress={() => {}}
+            icon={<Ionicons name="add" size={25} color="#000" />}
+          />
+        </View>
 
-        {/* Opções de envio */}
         <View style={styles.shippingContainer}>
           {shippingOptions.map((option) => (
             <TouchableOpacity
@@ -139,7 +142,13 @@ const DeliverySelectionScreen = () => {
 
         {/* Botões finais */}
         <View style={styles.buttonArea}>
-          <CustomButton title="Cancelar" onPress={() => {}} />
+          <CustomButton
+            title="Cancelar"
+            textColor="#22408C"
+            backgroundColor="#FFFFFF"
+            borderColor="#22408C"
+            onPress={() => {}}
+          />
           <CustomButton title="Finalizar negociação" onPress={() => {}} />
         </View>
       </ScrollView>
@@ -185,6 +194,7 @@ const styles = StyleSheet.create({
   },
   shippingContainer: {
     marginBottom: 24,
+    marginTop: 24,
   },
   shippingOption: {
     flexDirection: "row",
@@ -214,6 +224,7 @@ const styles = StyleSheet.create({
   },
   buttonArea: {
     gap: 12,
+    marginTop: 14,
   },
 });
 
