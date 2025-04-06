@@ -1,13 +1,27 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity, SafeAreaView, ScrollView, Platform, Text, StatusBar } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, SafeAreaView, ScrollView, Platform, Text, StatusBar, TextInput, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { Header } from '../../components/Header';
+
+// Componente de categoria
+type Categoria = {
+  id: number;
+  nome: string;
+  icone: any; // Icone do Ionicons
+};
 
 export default function PerfilScreen() {
   const handleLogout = () => {
     router.replace('/login');
   };
-
+  const categorias: Categoria[] = [
+    { id: 1, nome: 'Roupas', icone: 'shirt-outline' },
+    { id: 2, nome: 'Casa', icone: 'home-outline' },
+    { id: 3, nome: 'Eletrônicos', icone: 'laptop-outline' },
+    { id: 4, nome: 'Acessórios', icone: 'watch-outline' },
+    { id: 5, nome: 'Outros', icone: 'ellipsis-horizontal-outline' },
+  ];
   // Função para renderizar estrelas de avaliação
   const renderStars = (rating: number) => {
     const stars = [];
@@ -33,88 +47,71 @@ export default function PerfilScreen() {
         translucent={false}
       />
       <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity 
-            onPress={() => router.back()}
-            style={styles.headerButton}
-            activeOpacity={0.7}
-          >
-            <Ionicons name="chevron-back" size={24} color="#FFFFFF" />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Perfil</Text>
-          <TouchableOpacity 
-            style={styles.notificationButton}
-            activeOpacity={0.7}
-          >
-            <Ionicons name="notifications-outline" size={20} color="#1B262E" />
-            <View style={styles.notificationBadge}>
-              <Text style={styles.notificationBadgeText}>2</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
         
         <ScrollView 
           style={styles.content}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.scrollContent}
         >
-          <View style={styles.perfilInfo}>
+          {/* Perfil do Usuário */}
+          <View style={styles.profileSection}>
             <View style={styles.avatarContainer}>
               <View style={styles.avatar}>
-                <Text style={styles.avatarText}>JD</Text>
+                <Image 
+                  source={require('../../assets/images/seller-profile.jpg')} 
+                  style={styles.avatarImage}
+                />
               </View>
             </View>
-            <Text style={styles.nomeUsuario}>João da Silva</Text>
-            <Text style={styles.emailUsuario}>joao.silva@email.com</Text>
-            
-            <View style={styles.estatisticas}>
-              <View style={styles.estatisticaItem}>
-                <Text style={styles.estatisticaNumero}>12</Text>
-                <Text style={styles.estatisticaLabel}>Itens</Text>
-              </View>
-              <View style={styles.separador} />
-              <View style={styles.estatisticaItem}>
-                <Text style={styles.estatisticaNumero}>3</Text>
-                <Text style={styles.estatisticaLabel}>Trocas</Text>
-              </View>
-              <View style={styles.separador} />
-              <View style={styles.estatisticaItem}>
-                <Text style={styles.estatisticaNumero}>4.7</Text>
-                <Text style={styles.estatisticaLabel}>Avaliação</Text>
-              </View>
+            <View style={styles.profileInfo}>
+              <Text style={styles.profileLabel}>Olá eu sou</Text>
+              <Text style={styles.profileName}>Miguel da Silva</Text>
+              <Text style={styles.profileLocation}>Uberlândia/MG</Text>
             </View>
+          </View>
+          
+          <Text style={styles.sectionTitle}>Perfil</Text>
+          <Text style={styles.profileDescription}>Estes são os anúncios de Miguel</Text>
+          
+          {/* Categorias */}
+          <Text style={styles.categoryHeading}>Categorias</Text>
+          <ScrollView 
+            horizontal 
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.categoriasContainer}
+          >
+            {categorias.map((categoria) => (
+              <TouchableOpacity key={categoria.id} style={styles.categoriaItem}>
+                <View style={styles.categoriaIcone}>
+                  <Ionicons name={categoria.icone} size={20} color="#2A4BA0" />
+                </View>
+                <Text style={styles.categoriaNome}>{categoria.nome}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+          
+          {/* Barra de pesquisa */}
+          <View style={styles.searchContainer}>
+            <Ionicons name="search-outline" size={20} color="#8B96A0" />
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Buscar por itens (Ex.: Tênis Nike)"
+              placeholderTextColor="#8B96A0"
+            />
+            <TouchableOpacity>
+              <Ionicons name="options-outline" size={20} color="#8B96A0" />
+            </TouchableOpacity>
           </View>
 
           {/* Seção Para sua casa */}
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Para sua casa</Text>
-            <ScrollView 
-              horizontal 
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.productsRow}
-            >
-              <TouchableOpacity style={styles.productCard} activeOpacity={0.7}>
-                <View style={[styles.productImageContainer, { backgroundColor: "#4CAF50" }]}>
-                  <Ionicons name="bed-outline" size={48} color="#FFFFFF" />
-                </View>
-                <View style={styles.productInfo}>
-                  {renderStars(4.5)}
-                  <Text style={styles.productTitle}>Sofá 3 Lugares Cinza</Text>
-                  <Text style={styles.productLocation}>São Paulo, SP</Text>
-                </View>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.productCard} activeOpacity={0.7}>
-                <View style={[styles.productImageContainer, { backgroundColor: "#2196F3" }]}>
-                  <Ionicons name="restaurant-outline" size={48} color="#FFFFFF" />
-                </View>
-                <View style={styles.productInfo}>
-                  {renderStars(4.0)}
-                  <Text style={styles.productTitle}>Mesa de Jantar</Text>
-                  <Text style={styles.productLocation}>Rio de Janeiro, RJ</Text>
-                </View>
-              </TouchableOpacity>
-            </ScrollView>
+            <View style={styles.productCardLarge}>
+              <Image 
+                source={require('../../assets/images/sofa.png')} 
+                style={styles.productImageLarge}
+              />
+            </View>
           </View>
 
           {/* Seção Outros */}
@@ -126,8 +123,8 @@ export default function PerfilScreen() {
               contentContainerStyle={styles.productsRow}
             >
               <TouchableOpacity style={styles.productCard} activeOpacity={0.7}>
-                <View style={[styles.productImageContainer, { backgroundColor: "#9C27B0" }]}>
-                  <Ionicons name="briefcase-outline" size={48} color="#FFFFFF" />
+                <View style={[styles.productImageContainer, { backgroundColor: "#f0f0f0" }]}>
+                  <Ionicons name="briefcase-outline" size={48} color="#2A4BA0" />
                 </View>
                 <View style={styles.productInfo}>
                   {renderStars(4.0)}
@@ -137,8 +134,8 @@ export default function PerfilScreen() {
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.productCard} activeOpacity={0.7}>
-                <View style={[styles.productImageContainer, { backgroundColor: "#FF9800" }]}>
-                  <Ionicons name="footsteps-outline" size={48} color="#FFFFFF" />
+                <View style={[styles.productImageContainer, { backgroundColor: "#f0f0f0" }]}>
+                  <Ionicons name="footsteps-outline" size={48} color="#2A4BA0" />
                 </View>
                 <View style={styles.productInfo}>
                   {renderStars(4.5)}
@@ -147,32 +144,6 @@ export default function PerfilScreen() {
                 </View>
               </TouchableOpacity>
             </ScrollView>
-          </View>
-
-          <View style={styles.menu}>
-            <TouchableOpacity style={styles.menuItem} activeOpacity={0.7}>
-              <Ionicons name="settings-outline" size={24} color="#606D76" />
-              <Text style={styles.menuItemText}>Configurações</Text>
-              <Ionicons name="chevron-forward" size={20} color="#C5CDD2" />
-            </TouchableOpacity>
-            
-            <TouchableOpacity style={styles.menuItem} activeOpacity={0.7}>
-              <Ionicons name="help-circle-outline" size={24} color="#606D76" />
-              <Text style={styles.menuItemText}>Ajuda e Suporte</Text>
-              <Ionicons name="chevron-forward" size={20} color="#C5CDD2" />
-            </TouchableOpacity>
-            
-            <TouchableOpacity style={styles.menuItem} activeOpacity={0.7}>
-              <Ionicons name="information-circle-outline" size={24} color="#606D76" />
-              <Text style={styles.menuItemText}>Sobre o ReUse</Text>
-              <Ionicons name="chevron-forward" size={20} color="#C5CDD2" />
-            </TouchableOpacity>
-            
-            <TouchableOpacity style={styles.menuItem} onPress={handleLogout} activeOpacity={0.7}>
-              <Ionicons name="log-out-outline" size={24} color="#F44336" />
-              <Text style={[styles.menuItemText, styles.logoutText]}>Sair</Text>
-              <Ionicons name="chevron-forward" size={20} color="#C5CDD2" />
-            </TouchableOpacity>
           </View>
         </ScrollView>
       </View>
@@ -187,51 +158,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FB',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: '#2A4BA0',
-    ...(Platform.OS === 'android' ? {
-      paddingTop: StatusBar.currentHeight || 12,
-    } : {}),
-  },
-  headerButton: {
-    padding: 8,
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-  },
-  notificationButton: {
-    position: 'relative',
-    width: 40,
-    height: 40,
-    borderRadius: 20,
     backgroundColor: '#FFFFFF',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  notificationBadge: {
-    position: 'absolute',
-    top: -2,
-    right: -2,
-    backgroundColor: '#F44336',
-    width: 18,
-    height: 18,
-    borderRadius: 9,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  notificationBadgeText: {
-    color: '#FFFFFF',
-    fontSize: 12,
-    fontWeight: 'bold',
   },
   content: {
     flex: 1,
@@ -240,84 +167,147 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingBottom: 20,
   },
-  perfilInfo: {
-    backgroundColor: '#FFFFFF',
-    padding: 20,
+  profileSection: {
+    flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E7ECF0',
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 24,
   },
   avatarContainer: {
-    marginBottom: 12,
+    marginRight: 16,
   },
   avatar: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: '#2A4BA0',
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#D9D9D9',
     justifyContent: 'center',
     alignItems: 'center',
-    ...(Platform.OS === 'android' ? {
-      elevation: 4,
-    } : {
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-    }),
+    overflow: 'hidden',
   },
-  avatarText: {
-    color: '#FFFFFF',
-    fontSize: 24,
-    fontWeight: 'bold',
+  avatarImage: {
+    width: 60,
+    height: 60,
+    resizeMode: 'cover',
   },
-  nomeUsuario: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1B262E',
+  profileInfo: {
+    flex: 1,
   },
-  emailUsuario: {
-    fontSize: 14,
-    color: '#A9B4BC',
-    marginBottom: 20,
-  },
-  estatisticas: {
-    flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'space-around',
-    paddingHorizontal: 16,
-  },
-  estatisticaItem: {
-    alignItems: 'center',
-  },
-  estatisticaNumero: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1B262E',
-  },
-  estatisticaLabel: {
+  profileLabel: {
     fontSize: 12,
-    color: '#A9B4BC',
+    color: '#8B96A0',
   },
-  separador: {
-    height: 30,
-    width: 1,
-    backgroundColor: '#E7ECF0',
+  profileName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#1B262E',
+    marginVertical: 2,
   },
-  section: {
-    padding: 16,
+  profileLocation: {
+    fontSize: 12,
+    color: '#8B96A0',
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#1B262E',
-    marginBottom: 16,
+    paddingHorizontal: 16,
+    marginBottom: 4,
+  },
+  profileDescription: {
+    fontSize: 14,
+    color: '#8B96A0',
+    paddingHorizontal: 16,
+    marginBottom: 24,
+  },
+  categoriasContainer: {
+    paddingBottom: 16,
+    marginLeft: 17,
+  },
+  categoriaItem: {
+    alignItems: 'center',
+    marginRight: 16,
+  },
+  categoriaIcone: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#f0f0f0',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 4,
+  },
+  categoriaNome: {
+    fontSize: 12,
+    color: '#555',
+  },
+  categoryHeading: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#1B262E',
+    paddingHorizontal: 16,
+    marginBottom: 12,
+  },
+  categoriesContainer: {
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+    gap: 12,
+  },
+  categoryItem: {
+    alignItems: 'center',
+    marginRight: 16,
+    width: 60,
+  },
+  categoryIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  categoryLabel: {
+    fontSize: 12,
+    color: '#606D76',
+    textAlign: 'center',
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F8F9FB',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    marginHorizontal: 16,
+    marginBottom: 24,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 14,
+    color: '#1B262E',
+    marginLeft: 8,
+  },
+  section: {
+    marginBottom: 24,
+  },
+  productCardLarge: {
+    marginHorizontal: 16,
+    backgroundColor: '#F5F5F5',
+    borderRadius: 12,
+    overflow: 'hidden',
+    height: 180,
+  },
+  productImageLarge: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
   productsRow: {
-    paddingRight: 16,
+    paddingHorizontal: 16,
   },
   productCard: {
-    width: 200,
+    width: 180,
     marginRight: 16,
     backgroundColor: '#FFFFFF',
     borderRadius: 12,
@@ -354,25 +344,4 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#A9B4BC',
   },
-  menu: {
-    backgroundColor: '#FFFFFF',
-    marginTop: 16,
-  },
-  menuItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 16,
-    paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E7ECF0',
-  },
-  menuItemText: {
-    marginLeft: 16,
-    fontSize: 16,
-    color: '#1B262E',
-    flex: 1,
-  },
-  logoutText: {
-    color: '#F44336',
-  }
 }); 

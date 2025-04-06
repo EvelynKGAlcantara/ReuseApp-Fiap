@@ -6,21 +6,23 @@ module.exports = function(api) {
             ["babel-preset-expo", {
                 jsxImportSource: "nativewind"
             }],
-            "nativewind/babel",
-            [
-                "@babel/preset-env",
-                {
-                    "targets": {
-                        "chrome": "49",
-                        "ios": "10"
-                    }
-                }
-            ]
+            "nativewind/babel"
         ],
 
         plugins: [
             ["module-resolver", {
                 root: ["./"],
+                extensions: [
+                    '.ios.ts',
+                    '.android.ts',
+                    '.ts',
+                    '.ios.tsx',
+                    '.android.tsx',
+                    '.tsx',
+                    '.jsx',
+                    '.js',
+                    '.json',
+                ],
                 alias: {
                     "@": "./",
                     "tailwind.config": "./tailwind.config.js"

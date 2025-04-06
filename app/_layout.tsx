@@ -61,12 +61,14 @@ function RootLayoutNav() {
         <TabsComponent />
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="registro" options={{ title: 'Cadastre-se', headerBackTitle: 'Voltar' }} />
-          <Stack.Screen name="confirmacao" options={{ title: 'Confirmação', headerBackTitle: 'Voltar' }} />
-          <Stack.Screen name="cadastro-sucesso" options={{ title: 'Sucesso', headerBackTitle: 'Voltar' }} />
-          <Stack.Screen name="login" options={{ title: 'Login', headerBackTitle: 'Voltar' }} />
-          <Stack.Screen name="location-test" options={{ title: 'Teste de Localização', headerBackTitle: 'Voltar' }} />
+          <Stack.Screen name="login" options={{ headerShown: false }} />
+          <Stack.Screen name="registro" options={{ headerShown: false }} />
+          <Stack.Screen name="confirmacao" options={{ headerShown: false }} />
+          <Stack.Screen name="cadastro-sucesso" options={{ headerShown: false }} />
           <Stack.Screen name="product-details" options={{ headerShown: false }} />
+          <Stack.Screen name="notificacoes" options={{ headerShown: false }} />
+          <Stack.Screen name="proposta-recebida" options={{ headerShown: false }} />
+          <Stack.Screen name="detalhes-produto" options={{ headerShown: false }} />
         </Stack>
         <StatusBar barStyle="light-content" backgroundColor="blue" />
       </ThemeProvider>

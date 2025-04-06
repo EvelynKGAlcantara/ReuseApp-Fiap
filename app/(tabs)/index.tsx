@@ -5,7 +5,7 @@ import { Link, router } from 'expo-router';
 
 export default function HomeScreen() {
   const navigateToProfile = () => {
-    router.navigate('perfil');
+    router.push('/(tabs)/perfil');
   };
 
   return (
@@ -49,6 +49,20 @@ export default function HomeScreen() {
           onPress={navigateToProfile}
         >
           <Text style={styles.buttonText}>Ver Perfil</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => router.push('/proposta-recebida')}
+        >
+          <Text style={styles.buttonText}>Ver Proposta Recebida</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => router.push('/detalhes-produto')}
+        >
+          <Text style={styles.buttonText}>Ver Nova Tela de Produto</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
