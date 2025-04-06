@@ -1,7 +1,7 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Tabs } from "expo-router";
+import React from "react";
+import { Platform } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 import { HapticTab } from '@/components/HapticTab';
 import TabBarBackground from '@/components/ui/TabBarBackground';
@@ -31,6 +31,15 @@ export default function TabLayout() {
         }),
       }}>
       <Tabs.Screen
+        name="home-page"
+        options={{
+          title: "Home Page",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="alert-circle" size={24} color={color} />
+          ),
+        }}
+      />
+      {/* <Tabs.Screen
         name="index"
         options={{
           title: 'Início',
@@ -51,6 +60,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="heart-o" color={color} />,
         }}
       />
+
       <Tabs.Screen
         name="trades"
         options={{

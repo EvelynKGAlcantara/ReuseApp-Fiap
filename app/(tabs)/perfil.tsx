@@ -13,7 +13,7 @@ type Categoria = {
 
 export default function PerfilScreen() {
   const handleLogout = () => {
-    router.replace('/login');
+    router.replace("/login");
   };
   const categorias: Categoria[] = [
     { id: 1, nome: 'Roupas', icone: 'shirt-outline' },
@@ -344,4 +344,4 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#A9B4BC',
   },
-}); 
+});
