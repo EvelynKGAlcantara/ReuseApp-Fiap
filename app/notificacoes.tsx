@@ -148,14 +148,6 @@ export default function NotificacoesScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="white" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>ReUse</Text>
-        <View style={{ width: 24 }} /> {/* Espaçador para centralizar o título */}
-      </View>
 
       {/* Sub-header */}
       <View style={styles.subHeader}>
@@ -295,7 +287,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   botaoMensagem: {
-    backgroundColor: '#4A80F0',
+    backgroundColor: '#2A4BA0',
   },
   botaoProposta: {
     backgroundColor: '#4CAF50',

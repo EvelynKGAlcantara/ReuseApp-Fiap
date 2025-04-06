@@ -10,31 +10,17 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.logo}>ReUse</Text>
-        <TouchableOpacity 
-          style={styles.notificationButton}
-          onPress={() => router.push('/notificacoes')}
-        >
-          <Ionicons name="notifications-outline" size={24} color="#000" />
-          <View style={styles.notificationBadge}>
-            <Text style={styles.notificationBadgeText}>3</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-
       {/* Conteúdo */}
       <View style={styles.content}>
         <Text style={styles.welcomeText}>Bem-vindo ao ReUse!</Text>
         <Text style={styles.subText}>Compartilhe e encontre itens para reutilização</Text>
         
         <TouchableOpacity 
-          style={styles.button}
-          onPress={() => router.push('/minhas-publicacoes')}
+          style={[styles.button, styles.primaryButton]}
+          onPress={() => router.push('/suas-publicacoes')}
         >
-          <Text style={styles.buttonText}>Ver publicações</Text>
-          <Ionicons name="arrow-forward" size={20} color="#fff" />
+          <Text style={styles.buttonText}>Suas Publicações</Text>
+          <Ionicons name="documents-outline" size={20} color="#fff" />
         </TouchableOpacity>
 
         <TouchableOpacity 
@@ -71,6 +57,22 @@ export default function HomeScreen() {
         >
           <Text style={styles.buttonText}>Fazer Avaliação</Text>
         </TouchableOpacity>
+
+        <View style={styles.authButtons}>
+          <TouchableOpacity 
+            style={[styles.button, styles.loginButton]}
+            onPress={() => router.push('/login')}
+          >
+            <Text style={styles.loginButtonText}>Entrar</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={[styles.button, styles.registerButton]}
+            onPress={() => router.push('/registro')}
+          >
+            <Text style={styles.registerButtonText}>Cadastrar</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -149,11 +151,47 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '80%',
     maxWidth: 300,
+    marginBottom: 15,
+  },
+  primaryButton: {
+    backgroundColor: '#2A4BA0',
+    borderWidth: 2,
+    borderColor: '#F9B023',
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
     marginRight: 10,
+  },
+  authButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 16,
+    paddingHorizontal: 16,
+    width: '80%',
+    maxWidth: 300,
+  },
+  loginButton: {
+    backgroundColor: '#2A4BA0',
+    flex: 1,
+    marginRight: 8,
+    marginBottom: 0,
+  },
+  registerButton: {
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#2A4BA0',
+    flex: 1,
+    marginLeft: 8,
+    marginBottom: 0,
+  },
+  loginButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  registerButtonText: {
+    color: '#2A4BA0',
+    fontWeight: 'bold',
   },
 });

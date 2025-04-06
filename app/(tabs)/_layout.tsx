@@ -14,28 +14,74 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "yellow",
+        tabBarActiveTintColor: "#F9B023",
         tabBarInactiveTintColor: "white",
         headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
           ios: {
-            // Use a transparent background on iOS to show the blur effect
             position: 'absolute',
-            backgroundColor: 'blue',
+            backgroundColor: '#2A4BA0',
+            height: 85,
+            paddingTop: 5,
+            paddingBottom: Platform.OS === 'ios' ? 25 : 5,
+            borderTopWidth: 0,
           },
           default: {
-            backgroundColor: 'blue',
+            backgroundColor: '#2A4BA0',
+            height: 65,
+            paddingTop: 5,
+            paddingBottom: 5,
+            borderTopWidth: 0,
           },
         }),
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '500',
+          marginBottom: 5,
+        },
       }}>
       <Tabs.Screen
-        name="home-page"
+        name="index"
         options={{
-          title: "Home Page",
+          title: "Home",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="alert-circle" size={24} color={color} />
+            <Ionicons name="home" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="busca"
+        options={{
+          title: "Buscar",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="search" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="publicar"
+        options={{
+          title: "Publicar",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="add-circle" size={32} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="minhas-publicacoes"
+        options={{
+          title: "Minhas",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="documents" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="perfil"
+        options={{
+          title: "Perfil",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="person" size={24} color={color} />
           ),
         }}
       />

@@ -94,26 +94,9 @@ const MinhasPublicacoesScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="white" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>ReUse</Text>
-        <TouchableOpacity
-          style={styles.notificationButton}
-          onPress={() => router.push("/notificacoes")}
-        >
-          <Ionicons name="notifications-outline" size={24} color="#000" />
-          <View style={styles.notificationBadge}>
-            <Text style={styles.notificationBadgeText}>3</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
           <Text style={styles.titulo}>Suas publicações</Text>
-
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
