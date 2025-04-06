@@ -39,42 +39,6 @@ export default function TabLayout() {
           ),
         }}
       />
-      {/* <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Início',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="search"
-        options={{
-          title: 'Pesquisar',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="search" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="publications"
-        options={{
-          title: 'Publicações',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="heart-o" color={color} />,
-        }}
-      />
-
-      <Tabs.Screen
-        name="trades"
-        options={{
-          title: 'Trocas',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="exchange" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="data"
-        options={{
-          title: 'Meus dados',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="user-circle-o" color={color} />,
-        }}
-      />
     </Tabs>
   );
 }

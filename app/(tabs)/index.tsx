@@ -64,6 +64,13 @@ export default function HomeScreen() {
         >
           <Text style={styles.buttonText}>Ver Nova Tela de Produto</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => router.push('/avaliacao')}
+        >
+          <Text style={styles.buttonText}>Fazer Avaliação</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

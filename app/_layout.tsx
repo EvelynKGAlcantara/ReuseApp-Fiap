@@ -69,6 +69,7 @@ function RootLayoutNav() {
           <Stack.Screen name="notificacoes" options={{ headerShown: false }} />
           <Stack.Screen name="proposta-recebida" options={{ headerShown: false }} />
           <Stack.Screen name="detalhes-produto" options={{ headerShown: false }} />
+          <Stack.Screen name="avaliacao" options={{ headerShown: false }} />
         </Stack>
         <StatusBar barStyle="light-content" backgroundColor="blue" />
       </ThemeProvider>
