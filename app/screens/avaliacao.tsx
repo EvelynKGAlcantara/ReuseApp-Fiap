@@ -1,25 +1,60 @@
-import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  SafeAreaView, 
-  TouchableOpacity, 
-  TextInput, 
-  KeyboardAvoidingView, 
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+  TextInput,
+  KeyboardAvoidingView,
   Platform,
   Image,
-  ScrollView
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
-import { Header } from '../components/Header';
-import ImageUpload from '../components/ImageUpload';
+  ScrollView,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import ImageUpload from "../../components/ImageUpload";
+import { ImageButton } from "../components/buttons/botao-tracejado";
+import * as ImagePicker from "expo-image-picker";
 
 const AvaliacaoScreen = () => {
   const [rating, setRating] = useState(4);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
+  const [image, setImage] = useState<string | null>(null);
   const maxCharCount = 50;
+
+  const pickImage = async (mode: "camera" | "gallery") => {
+    let result;
+    if (mode === "camera") {
+      const { status } = await ImagePicker.requestCameraPermissionsAsync();
+      if (status !== "granted") {
+        alert("Permissão para acessar a câmera é necessária!");
+        return;
+      }
+      result = await ImagePicker.launchCameraAsync({
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+    } else {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        alert("Permissão para acessar a galeria é necessária!");
+        return;
+      }
+      result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+    }
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
   const handleRating = (value: number) => {
     setRating(value);
@@ -47,37 +82,35 @@ const AvaliacaoScreen = () => {
 
   const handleSubmit = () => {
     // Lógica para enviar a avaliação
-    router.back();
+    router.replace("/(tabs)");
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.keyboardAvoid}
       >
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={styles.content}>
             <Text style={styles.title}>Avaliação</Text>
-            
+
             <View style={styles.sellerInfo}>
               <Text style={styles.sellerLabel}>Ofertante:</Text>
               <Image
-                source={require('../assets/images/seller-profile.jpg')}
+                source={require("../../assets/images/seller-profile.jpg")}
                 style={styles.sellerImage}
               />
               <Text style={styles.sellerName}>Miguel da Silva</Text>
               <Text style={styles.sellerLocation}>Uberlândia/MG</Text>
             </View>
-            
-            <View style={styles.starsContainer}>
-              {renderStars()}
-            </View>
-            
+
+            <View style={styles.starsContainer}>{renderStars()}</View>
+
             <View style={styles.commentContainer}>
               <Text style={styles.commentLabel}>
-                Gostaria de deixar um comentário sobre sua experiência com o ofertante?
+                Gostaria de deixar um comentário sobre sua experiência com o
+                ofertante?
               </Text>
               <TextInput
                 style={styles.commentInput}
@@ -91,17 +124,19 @@ const AvaliacaoScreen = () => {
                 {maxCharCount - comment.length} caracteres
               </Text>
             </View>
-            
-            <View style={styles.photoSection}>
-              <View style={styles.photoContainer}>
-                <ImageUpload />
-              </View>
-              <View style={styles.photoContainer}>
-                <ImageUpload />
-              </View>
+
+            <View style={styles.imageUploadArea}>
+              <ImageButton
+                source={require("../../assets/images/image-buttons/image-icon.png")}
+                onPress={() => pickImage("gallery")}
+              />
+              <ImageButton
+                source={require("../../assets/images/image-buttons/camera-icon.png")}
+                onPress={() => pickImage("camera")}
+              />
             </View>
-            
-            <TouchableOpacity 
+
+            <TouchableOpacity
               style={styles.submitButton}
               onPress={handleSubmit}
               activeOpacity={0.8}
@@ -111,7 +146,7 @@ const AvaliacaoScreen = () => {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-      
+
       <View style={styles.tabBar}>
         <TouchableOpacity style={styles.tabItem}>
           <Ionicons name="home-outline" size={24} color="#777" />
@@ -141,7 +176,7 @@ const AvaliacaoScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   keyboardAvoid: {
     flex: 1,
@@ -155,16 +190,16 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 24,
   },
   sellerInfo: {
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 24,
   },
   sellerLabel: {
     fontSize: 14,
-    color: '#8B96A0',
+    color: "#8B96A0",
     marginBottom: 8,
   },
   sellerImage: {
@@ -175,16 +210,16 @@ const styles = StyleSheet.create({
   },
   sellerName: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 2,
   },
   sellerLocation: {
     fontSize: 14,
-    color: '#8B96A0',
+    color: "#8B96A0",
   },
   starsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
     marginBottom: 24,
   },
   starContainer: {
@@ -195,27 +230,27 @@ const styles = StyleSheet.create({
   },
   commentLabel: {
     fontSize: 14,
-    color: '#333',
+    color: "#333",
     marginBottom: 8,
-    textAlign: 'center',
+    textAlign: "center",
   },
   commentInput: {
     height: 80,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
     borderRadius: 8,
     padding: 10,
-    textAlignVertical: 'top',
+    textAlignVertical: "top",
     marginBottom: 4,
   },
   charCount: {
     fontSize: 12,
-    color: '#8B96A0',
-    textAlign: 'right',
+    color: "#8B96A0",
+    textAlign: "right",
   },
   photoSection: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
     marginBottom: 32,
   },
   photoContainer: {
@@ -223,44 +258,51 @@ const styles = StyleSheet.create({
     transform: [{ scale: 0.65 }],
   },
   submitButton: {
-    backgroundColor: '#2A4BA0',
+    backgroundColor: "#2A4BA0",
     padding: 16,
     borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   submitButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   tabBar: {
-    flexDirection: 'row',
+    flexDirection: "row",
     borderTopWidth: 1,
-    borderTopColor: '#eee',
+    borderTopColor: "#eee",
     paddingVertical: 8,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   tabItem: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingVertical: 4,
   },
   tabItemActive: {
     borderTopWidth: 2,
-    borderTopColor: '#2A4BA0',
+    borderTopColor: "#2A4BA0",
   },
   tabLabel: {
     fontSize: 12,
-    color: '#777',
+    color: "#777",
     marginTop: 2,
   },
   tabLabelActive: {
     fontSize: 12,
-    color: '#2A4BA0',
+    color: "#2A4BA0",
     marginTop: 2,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+  },
+  imageUploadArea: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    gap: 10,
+    paddingBottom: 32,
   },
 });
 

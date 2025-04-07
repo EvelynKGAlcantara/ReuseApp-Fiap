@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import Logo from "../components/logoReuse";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
 const cities = [
   "Uberlândia / MG",
@@ -12,7 +12,11 @@ const cities = [
 ];
 
 export default function SelecioneCidade() {
-  const navigation = useNavigation();
+  const router = useRouter();
+
+  const goToLogin = () => {
+    router.replace("/(auth)/login");
+  };
 
   return (
     <View style={styles.container}>
@@ -28,7 +32,11 @@ export default function SelecioneCidade() {
         </Text>
         <View style={styles.cityList}>
           {cities.map((city, index) => (
-            <TouchableOpacity key={index} style={styles.cityItem}>
+            <TouchableOpacity
+              key={index}
+              style={styles.cityItem}
+              onPress={goToLogin}
+            >
               <Text style={styles.cityText}>{city}</Text>
               <Ionicons name="chevron-forward" size={20} color="#FFF" />
             </TouchableOpacity>

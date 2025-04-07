@@ -9,6 +9,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { ItemCard } from "../components/cards/card-produto";
+import { router } from "expo-router";
 
 interface Product {
   id: string;
@@ -47,31 +48,35 @@ const products: Product[] = [
 ];
 
 export default function CategoriaProduto() {
-  const navigation = useNavigation();
-
   const renderItem = ({ item }: { item: Product }) => (
-    <ItemCard
-      imageSource={{ uri: item.imageUri }}
-      ratingComponent={
-        <>
-          {[...Array(Math.floor(item.rating))].map((_, index) => (
-            <Ionicons key={index} name="star" size={16} color="gold" />
-          ))}
-          {item.rating % 1 !== 0 && (
-            <Ionicons name="star-half" size={16} color="gold" />
-          )}
-          <Text style={{ marginLeft: 5 }}>{item.rating}/5</Text>
-        </>
-      }
-      title={item.title}
-      description={item.description}
-    />
+    <TouchableOpacity onPress={goToDetails}>
+      <ItemCard
+        imageSource={{ uri: item.imageUri }}
+        ratingComponent={
+          <>
+            {[...Array(Math.floor(item.rating))].map((_, index) => (
+              <Ionicons key={index} name="star" size={16} color="gold" />
+            ))}
+            {item.rating % 1 !== 0 && (
+              <Ionicons name="star-half" size={16} color="gold" />
+            )}
+            <Text style={{ marginLeft: 5 }}>{item.rating}/5</Text>
+          </>
+        }
+        title={item.title}
+        description={item.description}
+      />
+    </TouchableOpacity>
   );
+
+  const goToDetails = () => {
+    router.push("/screens/product-details");
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color="#FFF" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>

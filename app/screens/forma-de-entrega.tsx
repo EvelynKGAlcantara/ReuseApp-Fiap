@@ -12,6 +12,7 @@ import {
   ScrollView,
   Image,
 } from "react-native";
+import { router } from "expo-router";
 
 const deliveryOptions = [
   {
@@ -147,9 +148,12 @@ const DeliverySelectionScreen = () => {
             textColor="#22408C"
             backgroundColor="#FFFFFF"
             borderColor="#22408C"
-            onPress={() => {}}
+            onPress={() => router.back()}
           />
-          <CustomButton title="Finalizar negociação" onPress={() => {}} />
+          <CustomButton
+            title="Finalizar negociação"
+            onPress={() => router.push("/screens/avaliacao")}
+          />
         </View>
       </ScrollView>
     </View>

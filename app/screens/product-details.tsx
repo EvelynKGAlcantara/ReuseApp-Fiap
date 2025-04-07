@@ -1,8 +1,16 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, StatusBar } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
-import LocationMap from './components/LocationMap';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  StatusBar,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import LocationMap from "../components/LocationMap";
 
 const ProductDetailsScreen = () => {
   const [isFavorite, setIsFavorite] = React.useState(false);
@@ -19,7 +27,7 @@ const ProductDetailsScreen = () => {
     return [...Array(5)].map((_, index) => (
       <Ionicons
         key={`star-${index}`}
-        name={index < Math.floor(rating) ? 'star' : 'star-outline'}
+        name={index < Math.floor(rating) ? "star" : "star-outline"}
         size={14}
         color="#F9B023"
         style={{ marginRight: 1 }}
@@ -45,10 +53,10 @@ const ProductDetailsScreen = () => {
         </TouchableOpacity>
         <Text style={styles.headerTitle}>ReUse</Text>
         <TouchableOpacity onPress={handleFavorite} style={styles.headerButton}>
-          <Ionicons 
-            name={isFavorite ? "heart" : "heart-outline"} 
-            size={24} 
-            color="#fff" 
+          <Ionicons
+            name={isFavorite ? "heart" : "heart-outline"}
+            size={24}
+            color="#fff"
           />
         </TouchableOpacity>
       </View>
@@ -57,7 +65,7 @@ const ProductDetailsScreen = () => {
         {/* Product Image Container */}
         <View style={styles.productImageContainer}>
           <Image
-            source={require('../assets/images/just-walk.jpg')}
+            source={require("../../assets/images/just-walk.jpg")}
             style={styles.productImage}
             resizeMode="contain"
           />
@@ -76,13 +84,22 @@ const ProductDetailsScreen = () => {
         </Text>
 
         {/* Seller Info */}
-        <View style={styles.sellerContainer}>
-          <Image
-            source={require('../assets/images/seller-profile.jpg')}
-            style={styles.sellerImage}
-          />
-          <Text style={styles.sellerName}>Miguel da Silva</Text>
-        </View>
+        <TouchableOpacity
+          style={styles.sellerInfo}
+          onPress={() => router.push("/screens/perfil")}
+        >
+          <View style={styles.sellerContainer}>
+            <Image
+              source={require("../../assets/images/seller-profile.jpg")}
+              style={styles.sellerImage}
+            />
+          </View>
+          <View>
+            <Text style={styles.sellerLabel}>Ofertante:</Text>
+            <Text style={styles.sellerName}>Miguel da Silva</Text>
+            <Text style={styles.sellerLocation}>Uberlândia/MG</Text>
+          </View>
+        </TouchableOpacity>
 
         {/* Location Map */}
         <View style={styles.mapSection}>
@@ -101,16 +118,14 @@ const ProductDetailsScreen = () => {
           <Text style={styles.sectionTitle}>Avaliações do Ofertante</Text>
           <View style={styles.overallRating}>
             <Text style={styles.overallRatingNumber}>4,9</Text>
-            <View style={styles.starsContainer}>
-              {renderStars(4.9)}
-            </View>
+            <View style={styles.starsContainer}>{renderStars(4.9)}</View>
           </View>
 
           {/* Rating Bars */}
           <View style={styles.ratingBars}>
             {[90, 75, 50, 25, 10].map((percentage, index) => (
-              <View key={`rating-${5-index}`} style={styles.ratingRow}>
-                <Text style={styles.ratingNumber}>{5-index}</Text>
+              <View key={`rating-${5 - index}`} style={styles.ratingRow}>
+                <Text style={styles.ratingNumber}>{5 - index}</Text>
                 {renderRatingBar(percentage)}
                 <Text style={styles.ratingPercentage}>{percentage}%</Text>
               </View>
@@ -121,17 +136,21 @@ const ProductDetailsScreen = () => {
 
       {/* Bottom Buttons */}
       <View style={styles.bottomButtons}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.messageButton}
           activeOpacity={0.7}
+          onPress={() => router.push("/screens/mensagens")}
         >
           <Text style={styles.messageButtonText}>Mandar Mensagem</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.offerButton}
           activeOpacity={0.7}
+          onPress={() => router.push("/screens/fazer-proposta")}
         >
-          <Text style={styles.offerButtonText}>Quero trocar (fazer oferta)</Text>
+          <Text style={styles.offerButtonText}>
+            Quero trocar (fazer oferta)
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -141,13 +160,13 @@ const ProductDetailsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: '#2A4BA0',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#2A4BA0",
     paddingTop: 50,
     paddingBottom: 16,
     paddingHorizontal: 16,
@@ -156,67 +175,67 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   headerTitle: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   content: {
     flex: 1,
   },
   productImageContainer: {
-    width: '100%',
+    width: "100%",
     height: 320,
-    backgroundColor: '#ffffff',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#ffffff",
+    justifyContent: "center",
+    alignItems: "center",
   },
   productImage: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#ffffff',
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#ffffff",
   },
   ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 16,
     paddingVertical: 8,
   },
   ratingText: {
     marginLeft: 4,
-    color: '#F9B023',
+    color: "#F9B023",
     fontSize: 13,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   productTitle: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#1A1A1A',
+    fontWeight: "600",
+    color: "#1A1A1A",
     paddingHorizontal: 16,
     marginBottom: 4,
   },
   productDescription: {
     fontSize: 13,
-    color: '#666666',
+    color: "#666666",
     paddingHorizontal: 16,
     marginBottom: 12,
     lineHeight: 18,
   },
   sellerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 16,
     marginBottom: 16,
   },
   sellerImage: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
     marginRight: 8,
   },
   sellerName: {
     fontSize: 14,
-    color: '#1A1A1A',
-    fontWeight: '500',
+    color: "#1A1A1A",
+    fontWeight: "500",
   },
   mapSection: {
     paddingHorizontal: 16,
@@ -224,8 +243,8 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#1A1A1A',
+    fontWeight: "600",
+    color: "#1A1A1A",
     marginBottom: 12,
   },
   ratingsSection: {
@@ -233,81 +252,93 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
   },
   overallRating: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 16,
   },
   overallRatingNumber: {
     fontSize: 24,
-    fontWeight: '600',
-    color: '#1A1A1A',
+    fontWeight: "600",
+    color: "#1A1A1A",
     marginRight: 8,
   },
   starsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   ratingBars: {
     gap: 6,
   },
   ratingRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 8,
   },
   ratingNumber: {
     width: 16,
     fontSize: 13,
-    color: '#666666',
-    textAlign: 'center',
+    color: "#666666",
+    textAlign: "center",
   },
   ratingBarContainer: {
     flex: 1,
     height: 6,
-    backgroundColor: '#F0F0F0',
+    backgroundColor: "#F0F0F0",
     borderRadius: 3,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   ratingBar: {
-    height: '100%',
-    backgroundColor: '#F9B023',
+    height: "100%",
+    backgroundColor: "#F9B023",
   },
   ratingPercentage: {
     width: 32,
     fontSize: 13,
-    color: '#666666',
-    textAlign: 'right',
+    color: "#666666",
+    textAlign: "right",
   },
   bottomButtons: {
     padding: 16,
     borderTopWidth: 1,
-    borderTopColor: '#F0F0F0',
+    borderTopColor: "#F0F0F0",
     gap: 8,
   },
   messageButton: {
     paddingVertical: 12,
     borderRadius: 8,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderWidth: 1,
-    borderColor: '#2A4BA0',
-    alignItems: 'center',
+    borderColor: "#2A4BA0",
+    alignItems: "center",
   },
   messageButtonText: {
-    color: '#2A4BA0',
+    color: "#2A4BA0",
     fontSize: 15,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   offerButton: {
     paddingVertical: 12,
     borderRadius: 8,
-    backgroundColor: '#2A4BA0',
-    alignItems: 'center',
+    backgroundColor: "#2A4BA0",
+    alignItems: "center",
   },
   offerButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 15,
-    fontWeight: '600',
+    fontWeight: "600",
+  },
+  sellerInfo: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  sellerLocation: {
+    fontSize: 14,
+    color: "#8B96A0",
+  },
+  sellerLabel: {
+    fontSize: 14,
+    color: "#8B96A0",
   },
 });
 
-export default ProductDetailsScreen; 
+export default ProductDetailsScreen;

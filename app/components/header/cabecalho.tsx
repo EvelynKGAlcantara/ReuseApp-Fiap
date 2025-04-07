@@ -21,6 +21,12 @@ export default function Cabecalho({ icon }: CabecalhoProps) {
         <Text style={styles.logo}>Re</Text>
         <Text style={styles.logoUse}>Use</Text>
       </Text>
+      <Ionicons
+        name="notifications-outline"
+        size={24}
+        color="white"
+        onPress={() => router.push("/screens/notificacoes")}
+      />
     </View>
   );
 }
@@ -28,7 +34,7 @@ export default function Cabecalho({ icon }: CabecalhoProps) {
 const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
     padding: 16,
     backgroundColor: "#2A4BA0",

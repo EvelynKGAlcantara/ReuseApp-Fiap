@@ -1,19 +1,19 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import SellerRating from '../../components/SellerRating';
-import Theme from '../../constants/Theme';
+import React from "react";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+import SellerRating from "../../components/SellerRating";
+import Theme from "../../constants/Theme";
 
 export default function RatingExampleScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.title}>Exemplo de Avaliações</Text>
-        
-        <SellerRating 
+
+        <SellerRating
           sellerInfo={{
             name: "Miguel da Silva",
             location: "Uberlândia/MG",
-            profileImage: "https://randomuser.me/api/portraits/men/32.jpg"
+            profileImage: "https://randomuser.me/api/portraits/men/32.jpg",
           }}
           rating={4.0}
           maxRating={5}
@@ -27,14 +27,14 @@ export default function RatingExampleScreen() {
           }}
           salesEvaluated={47}
         />
-        
+
         <View style={styles.separator} />
-        
-        <SellerRating 
+
+        <SellerRating
           sellerInfo={{
             name: "Ana Carolina Mendes",
             location: "São Paulo/SP",
-            profileImage: "https://randomuser.me/api/portraits/women/44.jpg"
+            profileImage: "https://randomuser.me/api/portraits/women/44.jpg",
           }}
           rating={4.8}
           maxRating={5}
@@ -48,14 +48,14 @@ export default function RatingExampleScreen() {
           }}
           salesEvaluated={89}
         />
-        
+
         <View style={styles.separator} />
-        
-        <SellerRating 
+
+        <SellerRating
           sellerInfo={{
             name: "João Pereira",
             location: "Rio de Janeiro/RJ",
-            profileImage: "https://randomuser.me/api/portraits/men/67.jpg"
+            profileImage: "https://randomuser.me/api/portraits/men/67.jpg",
           }}
           rating={3.5}
           maxRating={5}
@@ -84,12 +84,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Theme.colors.primary[700],
     marginBottom: 20,
     marginTop: 10,
   },
   separator: {
     height: 24,
-  }
-}); 
+  },
+});

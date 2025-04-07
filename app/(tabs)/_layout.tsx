@@ -3,10 +3,9 @@ import React from "react";
 import { Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import { HapticTab } from '@/components/HapticTab';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { FontAwesome } from '@expo/vector-icons';
-import Theme from '@/constants/Theme';
+export const screenOptions = {
+  headerShown: false,
+};
 
 export default function TabLayout() {
   // const colorScheme = useColorScheme();
@@ -19,15 +18,15 @@ export default function TabLayout() {
         headerShown: false,
         tabBarStyle: Platform.select({
           ios: {
-            position: 'absolute',
-            backgroundColor: '#2A4BA0',
+            position: "absolute",
+            backgroundColor: "#22408C",
             height: 85,
             paddingTop: 5,
-            paddingBottom: Platform.OS === 'ios' ? 25 : 5,
+            paddingBottom: Platform.OS === "ios" ? 25 : 5,
             borderTopWidth: 0,
           },
           default: {
-            backgroundColor: '#2A4BA0',
+            backgroundColor: "#22408C",
             height: 65,
             paddingTop: 5,
             paddingBottom: 5,
@@ -36,14 +35,16 @@ export default function TabLayout() {
         }),
         tabBarLabelStyle: {
           fontSize: 12,
-          fontWeight: '500',
+          fontWeight: "500",
           marginBottom: 5,
         },
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: "Home",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Ionicons name="home" size={24} color={color} />
           ),
@@ -53,35 +54,39 @@ export default function TabLayout() {
         name="busca"
         options={{
           title: "Buscar",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Ionicons name="search" size={24} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="publicar"
+        name="suas-publicacoes"
         options={{
-          title: "Publicar",
+          title: "Publicações",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
-            <Ionicons name="add-circle" size={32} color={color} />
+            <Ionicons name="heart-outline" size={32} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="minhas-publicacoes"
+        name="trocas-propostas"
         options={{
-          title: "Minhas",
+          title: "Trocas",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
-            <Ionicons name="documents" size={24} color={color} />
+            <Ionicons name="document-outline" size={24} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="perfil"
+        name="meus-dados"
         options={{
-          title: "Perfil",
+          title: "Meus dados",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
-            <Ionicons name="person" size={24} color={color} />
+            <Ionicons name="person-outline" size={24} color={color} />
           ),
         }}
       />

@@ -1,7 +1,7 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Platform } from 'react-native';
-import MessageNotification from '../../components/MessageNotification';
-import Theme from '../../constants/Theme';
+import React from "react";
+import { View, Text, StyleSheet, ScrollView, Platform } from "react-native";
+import MessageNotification from "../../components/MessageNotification";
+import Theme from "../../constants/Theme";
 
 export default function MessageExampleScreen() {
   return (
@@ -22,7 +22,7 @@ export default function MessageExampleScreen() {
           iconColor={Theme.colors.primary[600]}
           timeAgo="11 horas atrás"
           senderAvatar="https://randomuser.me/api/portraits/women/44.jpg"
-          onViewMessage={() => console.log('Visualizar mensagem da Maria')}
+          onViewMessage={() => console.log("Visualizar mensagem da Maria")}
         />
 
         <MessageNotification
@@ -33,7 +33,7 @@ export default function MessageExampleScreen() {
           iconColor={Theme.colors.accent[500]}
           timeAgo="2 dias atrás"
           senderAvatar="https://randomuser.me/api/portraits/men/32.jpg"
-          onViewMessage={() => console.log('Visualizar mensagem do João')}
+          onViewMessage={() => console.log("Visualizar mensagem do João")}
         />
 
         <MessageNotification
@@ -44,7 +44,7 @@ export default function MessageExampleScreen() {
           iconColor={Theme.colors.accent[600]}
           timeAgo="1 semana atrás"
           senderAvatar="https://randomuser.me/api/portraits/women/68.jpg"
-          onViewMessage={() => console.log('Visualizar mensagem da Ana')}
+          onViewMessage={() => console.log("Visualizar mensagem da Ana")}
         />
 
         <MessageNotification
@@ -55,9 +55,9 @@ export default function MessageExampleScreen() {
           iconColor={Theme.colors.primary[700]}
           timeAgo="2 horas atrás"
           senderAvatar="https://randomuser.me/api/portraits/men/75.jpg"
-          onViewMessage={() => console.log('Visualizar mensagem do Carlos')}
+          onViewMessage={() => console.log("Visualizar mensagem do Carlos")}
         />
-        
+
         <MessageNotification
           senderName="Fernanda Lima"
           messagePreview="tem interesse no seu produto"
@@ -66,9 +66,9 @@ export default function MessageExampleScreen() {
           iconColor={Theme.colors.primary[500]}
           timeAgo="Agora mesmo"
           senderAvatar="https://randomuser.me/api/portraits/women/22.jpg"
-          onViewMessage={() => console.log('Visualizar mensagem da Fernanda')}
+          onViewMessage={() => console.log("Visualizar mensagem da Fernanda")}
         />
-        
+
         <MessageNotification
           senderName="Ricardo Gomes"
           messagePreview="solicitou mais informações sobre"
@@ -76,7 +76,7 @@ export default function MessageExampleScreen() {
           iconName="restaurant-outline"
           iconColor={Theme.colors.accent[700]}
           timeAgo="5 horas atrás"
-          onViewMessage={() => console.log('Visualizar mensagem do Ricardo')}
+          onViewMessage={() => console.log("Visualizar mensagem do Ricardo")}
         />
       </ScrollView>
     </View>
@@ -106,13 +106,13 @@ const styles = StyleSheet.create({
         elevation: 3,
       },
       web: {
-        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+        boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
       },
     }),
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Theme.colors.gray[50],
     marginBottom: 8,
   },
@@ -125,4 +125,4 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
   },
-}); 
+});

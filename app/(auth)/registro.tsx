@@ -8,29 +8,47 @@ import {
   Image,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Link, router } from "expo-router";
+import { Link, router, useRouter } from "expo-router";
 
-const LoginScreen = () => {
+const RegistroScreen = () => {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
   const [mostrarSenha, setMostrarSenha] = useState(false);
+  const [mostrarConfirmarSenha, setMostrarConfirmarSenha] = useState(false);
   const [btnAtivo, setBtnAtivo] = useState(false);
+  const router = useRouter();
 
   const alternarMostrarSenha = () => {
     setMostrarSenha(!mostrarSenha);
   };
 
+  const alternarMostrarConfirmarSenha = () => {
+    setMostrarConfirmarSenha(!mostrarConfirmarSenha);
+  };
+
+  const goBack = () => {
+    router.replace("/(auth)/login");
+  };
+
   const validarFormulario = () => {
-    if (email.trim() !== "" && senha.trim() !== "") {
+    if (
+      email.trim() !== "" &&
+      senha.trim() !== "" &&
+      confirmarSenha.trim() !== ""
+    ) {
       setBtnAtivo(true);
     } else {
       setBtnAtivo(false);
     }
   };
 
-  const handleLogin = () => {
+  const handleSubmit = () => {
     // Em uma aplicação real, validaria os dados aqui
-    router.replace("/(tabs)");
+    router.push({
+      pathname: "/confirmacao",
+      params: { email },
+    });
   };
 
   return (
@@ -42,10 +60,10 @@ const LoginScreen = () => {
           </Text>
         </View>
 
-        <Text style={styles.title}>Faça Login</Text>
+        <Text style={styles.title}>Cadastre-se</Text>
         <Text style={styles.subtitle}>
-          Acesse a plataforma agora e experimente{"\n"}a melhor maneira trocar
-          seus itens!
+          Preencha os dados abaixo e comece a{"\n"}trocar seus itens agora
+          mesmo!
         </Text>
 
         <View style={styles.form}>
@@ -86,22 +104,41 @@ const LoginScreen = () => {
             </TouchableOpacity>
           </View>
 
-          <View style={styles.forgotPasswordContainer}>
-            <TouchableOpacity>
-              <Text style={styles.forgotPasswordText}>Esqueceu sua senha?</Text>
+          <Text style={[styles.label, { marginTop: 16 }]}>Confirmar Senha</Text>
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={styles.passwordInput}
+              placeholder="Insira a confirmação da senha"
+              value={confirmarSenha}
+              onChangeText={(text) => {
+                setConfirmarSenha(text);
+                validarFormulario();
+              }}
+              secureTextEntry={!mostrarConfirmarSenha}
+            />
+            <TouchableOpacity
+              onPress={alternarMostrarConfirmarSenha}
+              style={styles.eyeIcon}
+            >
+              <Ionicons
+                name={mostrarConfirmarSenha ? "eye-outline" : "eye-off-outline"}
+                size={20}
+                color="#888"
+              />
             </TouchableOpacity>
           </View>
         </View>
 
         <TouchableOpacity
-          style={[styles.loginButton, btnAtivo && styles.loginButtonActive]}
+          style={[styles.button, btnAtivo && styles.buttonActive]}
           activeOpacity={0.8}
           onPress={() => {
             setBtnAtivo(true);
-            handleLogin();
+            handleSubmit();
           }}
+          disabled={!btnAtivo}
         >
-          <Text style={styles.loginButtonText}>Login</Text>
+          <Text style={styles.buttonText}>Enviar</Text>
         </TouchableOpacity>
 
         <View style={styles.orContainer}>
@@ -115,7 +152,7 @@ const LoginScreen = () => {
             color="#4285F4"
             style={styles.socialIcon}
           />
-          <Text style={styles.googleButtonText}>Login com Google</Text>
+          <Text style={styles.googleButtonText}>Entrar com Google</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.facebookButton} activeOpacity={0.8}>
@@ -125,16 +162,14 @@ const LoginScreen = () => {
             color="white"
             style={styles.socialIcon}
           />
-          <Text style={styles.facebookButtonText}>Login com Facebook</Text>
+          <Text style={styles.facebookButtonText}>Entrar com Facebook</Text>
         </TouchableOpacity>
 
-        <View style={styles.registerLink}>
-          <Text style={styles.registerText}>Ainda não tem conta? </Text>
-          <Link href="/registro" asChild>
-            <TouchableOpacity>
-              <Text style={styles.registerLinkText}>Cadastre-se</Text>
-            </TouchableOpacity>
-          </Link>
+        <View style={styles.loginLink}>
+          <Text style={styles.loginText}>Já possui uma conta? </Text>
+          <TouchableOpacity onPress={goBack}>
+            <Text style={styles.loginLinkText}>Faça Login</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -181,7 +216,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: "#666",
     marginBottom: 24,
-    lineHeight: 20,
+    lineHeight: 18,
   },
   form: {
     marginBottom: 24,
@@ -220,26 +255,17 @@ const styles = StyleSheet.create({
   eyeIcon: {
     padding: 10,
   },
-  forgotPasswordContainer: {
-    alignItems: "flex-end",
-    marginTop: 8,
-  },
-  forgotPasswordText: {
-    color: "#2A4BA0",
-    fontSize: 12,
-    fontWeight: "500",
-  },
-  loginButton: {
+  button: {
     backgroundColor: "#D1D1D1",
     borderRadius: 100,
     paddingVertical: 14,
     alignItems: "center",
     marginBottom: 16,
   },
-  loginButtonActive: {
+  buttonActive: {
     backgroundColor: "#2A4BA0",
   },
-  loginButtonText: {
+  buttonText: {
     color: "white",
     fontWeight: "bold",
     fontSize: 15,
@@ -291,20 +317,20 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 14,
   },
-  registerLink: {
+  loginLink: {
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 8,
   },
-  registerText: {
+  loginText: {
     color: "#666",
     fontSize: 13,
   },
-  registerLinkText: {
+  loginLinkText: {
     color: "#2A4BA0",
     fontWeight: "500",
     fontSize: 13,
   },
 });
 
-export default LoginScreen;
+export default RegistroScreen;

@@ -5,6 +5,7 @@ import Cabecalho from "../components/header/cabecalho";
 import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
 import { ImageButton } from "../components/buttons/botao-tracejado";
+import { useRouter } from "expo-router";
 
 export default function PublicarItem() {
   const [productName, setProductName] = useState("");
@@ -12,6 +13,7 @@ export default function PublicarItem() {
   const [category, setCategory] = useState("");
   const [state, setState] = useState("");
   const [image, setImage] = useState<string | null>(null);
+  const router = useRouter();
 
   const pickImage = async (mode: "camera" | "gallery") => {
     let result;
@@ -44,6 +46,14 @@ export default function PublicarItem() {
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
+  };
+
+  const goBack = () => {
+    router.back();
+  };
+
+  const goToPublications = () => {
+    router.replace("/(tabs)/suas-publicacoes");
   };
 
   return (
@@ -106,7 +116,7 @@ export default function PublicarItem() {
               <View style={styles.buttonStyle}>
                 <CustomButton
                   title="Cancelar"
-                  onPress={() => alert("Botão Pressionado!")}
+                  onPress={goBack}
                   backgroundColor="transparent"
                   borderColor="#2A4BA0"
                   textColor="#2A4BA0"
@@ -116,7 +126,7 @@ export default function PublicarItem() {
               <View style={styles.buttonStyle}>
                 <CustomButton
                   title="Publicar"
-                  onPress={() => alert("Botão Pressionado!")}
+                  onPress={goToPublications}
                   borderColor="#2A4BA0"
                 />
               </View>

@@ -9,9 +9,12 @@ import {
 import Cabecalho from "../components/header/cabecalho";
 import { useState } from "react";
 import { ItemCard } from "../components/cards/card-produto";
+import CustomButton from "@/components/CustomButton";
+import { useRouter } from "expo-router";
 
 export default function FazerProposta() {
   const [checked, setChecked] = useState(false);
+  const router = useRouter();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -79,6 +82,26 @@ export default function FazerProposta() {
             checked={checked}
             onCheckChange={() => setChecked(!checked)}
           />
+        </View>
+
+        <View style={styles.buttonArea}>
+          <View style={styles.buttonStyle}>
+            <CustomButton
+              title="Quero cadastrar mais itens"
+              onPress={() => alert("Botão Pressionado!")}
+              backgroundColor="transparent"
+              borderColor="#2A4BA0"
+              textColor="#2A4BA0"
+            />
+          </View>
+
+          <View style={styles.buttonStyle}>
+            <CustomButton
+              title="Concluir proposta"
+              onPress={() => router.push("/screens/proposta-concluida")}
+              borderColor="#2A4BA0"
+            />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -150,5 +173,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     position: "relative",
     width: "55%",
+  },
+  buttonStyle: {
+    paddingBottom: 12,
+  },
+  buttonArea: {
+    paddingTop: 32,
+    paddingBottom: 12,
   },
 });

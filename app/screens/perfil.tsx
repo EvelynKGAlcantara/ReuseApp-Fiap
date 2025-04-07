@@ -1,8 +1,20 @@
-import React from 'react';
-import { StyleSheet, View, TouchableOpacity, SafeAreaView, ScrollView, Platform, Text, StatusBar, TextInput, Image } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
-import { Header } from '../../components/Header';
+import React from "react";
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+  ScrollView,
+  Platform,
+  Text,
+  StatusBar,
+  TextInput,
+  Image,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { Header } from "../../components/Header";
+import Cabecalho from "../components/header/cabecalho";
 
 // Componente de categoria
 type Categoria = {
@@ -16,11 +28,11 @@ export default function PerfilScreen() {
     router.replace("/login");
   };
   const categorias: Categoria[] = [
-    { id: 1, nome: 'Roupas', icone: 'shirt-outline' },
-    { id: 2, nome: 'Casa', icone: 'home-outline' },
-    { id: 3, nome: 'Eletrônicos', icone: 'laptop-outline' },
-    { id: 4, nome: 'Acessórios', icone: 'watch-outline' },
-    { id: 5, nome: 'Outros', icone: 'ellipsis-horizontal-outline' },
+    { id: 1, nome: "Roupas", icone: "shirt-outline" },
+    { id: 2, nome: "Casa", icone: "home-outline" },
+    { id: 3, nome: "Eletrônicos", icone: "laptop-outline" },
+    { id: 4, nome: "Acessórios", icone: "watch-outline" },
+    { id: 5, nome: "Outros", icone: "ellipsis-horizontal-outline" },
   ];
   // Função para renderizar estrelas de avaliação
   const renderStars = (rating: number) => {
@@ -41,14 +53,14 @@ export default function PerfilScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar 
-        backgroundColor="#2A4BA0" 
+      <Cabecalho />
+      <StatusBar
+        backgroundColor="#2A4BA0"
         barStyle="light-content"
         translucent={false}
       />
       <View style={styles.container}>
-        
-        <ScrollView 
+        <ScrollView
           style={styles.content}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.scrollContent}
@@ -57,8 +69,8 @@ export default function PerfilScreen() {
           <View style={styles.profileSection}>
             <View style={styles.avatarContainer}>
               <View style={styles.avatar}>
-                <Image 
-                  source={require('../../assets/images/seller-profile.jpg')} 
+                <Image
+                  source={require("../../assets/images/seller-profile.jpg")}
                   style={styles.avatarImage}
                 />
               </View>
@@ -69,14 +81,16 @@ export default function PerfilScreen() {
               <Text style={styles.profileLocation}>Uberlândia/MG</Text>
             </View>
           </View>
-          
+
           <Text style={styles.sectionTitle}>Perfil</Text>
-          <Text style={styles.profileDescription}>Estes são os anúncios de Miguel</Text>
-          
+          <Text style={styles.profileDescription}>
+            Estes são os anúncios de Miguel
+          </Text>
+
           {/* Categorias */}
           <Text style={styles.categoryHeading}>Categorias</Text>
-          <ScrollView 
-            horizontal 
+          <ScrollView
+            horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.categoriasContainer}
           >
@@ -89,7 +103,7 @@ export default function PerfilScreen() {
               </TouchableOpacity>
             ))}
           </ScrollView>
-          
+
           {/* Barra de pesquisa */}
           <View style={styles.searchContainer}>
             <Ionicons name="search-outline" size={20} color="#8B96A0" />
@@ -107,8 +121,8 @@ export default function PerfilScreen() {
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Para sua casa</Text>
             <View style={styles.productCardLarge}>
-              <Image 
-                source={require('../../assets/images/sofa.png')} 
+              <Image
+                source={require("../../assets/images/sofa.png")}
                 style={styles.productImageLarge}
               />
             </View>
@@ -117,14 +131,23 @@ export default function PerfilScreen() {
           {/* Seção Outros */}
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Outros</Text>
-            <ScrollView 
-              horizontal 
+            <ScrollView
+              horizontal
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.productsRow}
             >
               <TouchableOpacity style={styles.productCard} activeOpacity={0.7}>
-                <View style={[styles.productImageContainer, { backgroundColor: "#f0f0f0" }]}>
-                  <Ionicons name="briefcase-outline" size={48} color="#2A4BA0" />
+                <View
+                  style={[
+                    styles.productImageContainer,
+                    { backgroundColor: "#f0f0f0" },
+                  ]}
+                >
+                  <Ionicons
+                    name="briefcase-outline"
+                    size={48}
+                    color="#2A4BA0"
+                  />
                 </View>
                 <View style={styles.productInfo}>
                   {renderStars(4.0)}
@@ -134,8 +157,17 @@ export default function PerfilScreen() {
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.productCard} activeOpacity={0.7}>
-                <View style={[styles.productImageContainer, { backgroundColor: "#f0f0f0" }]}>
-                  <Ionicons name="footsteps-outline" size={48} color="#2A4BA0" />
+                <View
+                  style={[
+                    styles.productImageContainer,
+                    { backgroundColor: "#f0f0f0" },
+                  ]}
+                >
+                  <Ionicons
+                    name="footsteps-outline"
+                    size={48}
+                    color="#2A4BA0"
+                  />
                 </View>
                 <View style={styles.productInfo}>
                   {renderStars(4.5)}
@@ -154,11 +186,11 @@ export default function PerfilScreen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#2A4BA0',
+    backgroundColor: "#2A4BA0",
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
   },
   content: {
     flex: 1,
@@ -168,8 +200,8 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   profileSection: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 16,
     paddingTop: 16,
     paddingBottom: 24,
@@ -181,43 +213,43 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: '#D9D9D9',
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
+    backgroundColor: "#D9D9D9",
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
   },
   avatarImage: {
     width: 60,
     height: 60,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
   profileInfo: {
     flex: 1,
   },
   profileLabel: {
     fontSize: 12,
-    color: '#8B96A0',
+    color: "#8B96A0",
   },
   profileName: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#1B262E',
+    fontWeight: "bold",
+    color: "#1B262E",
     marginVertical: 2,
   },
   profileLocation: {
     fontSize: 12,
-    color: '#8B96A0',
+    color: "#8B96A0",
   },
   sectionTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#1B262E',
+    fontWeight: "bold",
+    color: "#1B262E",
     paddingHorizontal: 16,
     marginBottom: 4,
   },
   profileDescription: {
     fontSize: 14,
-    color: '#8B96A0',
+    color: "#8B96A0",
     paddingHorizontal: 16,
     marginBottom: 24,
   },
@@ -226,26 +258,26 @@ const styles = StyleSheet.create({
     marginLeft: 17,
   },
   categoriaItem: {
-    alignItems: 'center',
+    alignItems: "center",
     marginRight: 16,
   },
   categoriaIcone: {
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#f0f0f0',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#f0f0f0",
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: 4,
   },
   categoriaNome: {
     fontSize: 12,
-    color: '#555',
+    color: "#555",
   },
   categoryHeading: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#1B262E',
+    fontWeight: "bold",
+    color: "#1B262E",
     paddingHorizontal: 16,
     marginBottom: 12,
   },
@@ -255,7 +287,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   categoryItem: {
-    alignItems: 'center',
+    alignItems: "center",
     marginRight: 16,
     width: 60,
   },
@@ -263,19 +295,19 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 4,
   },
   categoryLabel: {
     fontSize: 12,
-    color: '#606D76',
-    textAlign: 'center',
+    color: "#606D76",
+    textAlign: "center",
   },
   searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#F8F9FB',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#F8F9FB",
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 8,
@@ -285,7 +317,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: 14,
-    color: '#1B262E',
+    color: "#1B262E",
     marginLeft: 8,
   },
   section: {
@@ -293,15 +325,15 @@ const styles = StyleSheet.create({
   },
   productCardLarge: {
     marginHorizontal: 16,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: "#F5F5F5",
     borderRadius: 12,
-    overflow: 'hidden',
+    overflow: "hidden",
     height: 180,
   },
   productImageLarge: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
   },
   productsRow: {
     paddingHorizontal: 16,
@@ -309,39 +341,41 @@ const styles = StyleSheet.create({
   productCard: {
     width: 180,
     marginRight: 16,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     borderRadius: 12,
-    overflow: 'hidden',
-    ...(Platform.OS === 'android' ? {
-      elevation: 2,
-    } : {
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-    }),
+    overflow: "hidden",
+    ...(Platform.OS === "android"
+      ? {
+          elevation: 2,
+        }
+      : {
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 4,
+        }),
   },
   productImageContainer: {
-    width: '100%',
+    width: "100%",
     height: 150,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   productInfo: {
     padding: 12,
   },
   starsContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginBottom: 4,
   },
   productTitle: {
     fontSize: 14,
-    fontWeight: '600',
-    color: '#1B262E',
+    fontWeight: "600",
+    color: "#1B262E",
     marginBottom: 4,
   },
   productLocation: {
     fontSize: 12,
-    color: '#A9B4BC',
+    color: "#A9B4BC",
   },
 });

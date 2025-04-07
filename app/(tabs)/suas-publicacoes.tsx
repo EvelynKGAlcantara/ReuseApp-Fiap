@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import Cabecalho from "../components/header/cabecalho";
 
 type Categoria = {
   id: number;
@@ -92,8 +93,14 @@ const MinhasPublicacoesScreen = () => {
     return estrelas;
   };
 
+  const handleNew = () => {
+    router.push("/screens/publicar-item");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
+      <Cabecalho />
+
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
           <Text style={styles.titulo}>Suas publicações</Text>
@@ -124,7 +131,7 @@ const MinhasPublicacoesScreen = () => {
               placeholder="Buscar por item (Ex.: Mesa Verde)"
               placeholderTextColor="#888"
             />
-            <TouchableOpacity style={styles.addButton}>
+            <TouchableOpacity style={styles.addButton} onPress={handleNew}>
               <Ionicons name="add" size={22} color="white" />
             </TouchableOpacity>
           </View>

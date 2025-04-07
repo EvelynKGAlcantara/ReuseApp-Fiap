@@ -1,7 +1,10 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
-import CategoryList, { shortNameCategories, tinyNameCategories } from '../../components/CategoryList';
-import Theme from '../../constants/Theme';
+import React from "react";
+import { View, Text, StyleSheet, ScrollView, Alert } from "react-native";
+import CategoryList, {
+  shortNameCategories,
+  tinyNameCategories,
+} from "../../components/CategoryList";
+import Theme from "../../constants/Theme";
 
 // Categoria tipo para definir tipos personalizados para o exemplo
 type Category = {
@@ -15,42 +18,42 @@ export default function CategoriesExampleScreen() {
   // Função para lidar com o clique em uma categoria
   const handleCategoryPress = (category: Category) => {
     Alert.alert(
-      'Categoria selecionada',
+      "Categoria selecionada",
       `Você selecionou a categoria: ${category.name}`,
-      [{ text: 'OK', onPress: () => console.log('OK Pressed') }]
+      [{ text: "OK", onPress: () => console.log("OK Pressed") }]
     );
   };
 
   // Categorias conforme mostradas na imagem
   const mainCategories: Category[] = [
     {
-      id: '1',
-      name: 'Roupas',
-      iconName: 'shirt-outline',
+      id: "1",
+      name: "Roupas",
+      iconName: "shirt-outline",
       color: Theme.colors.primary[600],
     },
     {
-      id: '2',
-      name: 'Casa',
-      iconName: 'home-outline',
+      id: "2",
+      name: "Casa",
+      iconName: "home-outline",
       color: Theme.colors.primary[600],
     },
     {
-      id: '3',
-      name: 'Calçados',
-      iconName: 'footsteps-outline',
+      id: "3",
+      name: "Calçados",
+      iconName: "footsteps-outline",
       color: Theme.colors.primary[600],
     },
     {
-      id: '4',
-      name: 'Acessórios',
-      iconName: 'glasses-outline',
+      id: "4",
+      name: "Acessórios",
+      iconName: "glasses-outline",
       color: Theme.colors.primary[600],
     },
     {
-      id: '5',
-      name: 'Outros',
-      iconName: 'bag-handle-outline',
+      id: "5",
+      name: "Outros",
+      iconName: "bag-handle-outline",
       color: Theme.colors.primary[600],
     },
   ];
@@ -59,25 +62,25 @@ export default function CategoriesExampleScreen() {
     <ScrollView style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.sectionTitle}>Layout Original</Text>
-        <CategoryList 
+        <CategoryList
           categories={mainCategories}
           title="Categorias"
           onCategoryPress={handleCategoryPress}
         />
-        
+
         <View style={styles.separator} />
-        
+
         <Text style={styles.sectionTitle}>Nomes Curtos</Text>
-        <CategoryList 
+        <CategoryList
           categories={shortNameCategories}
           title="Categorias"
           onCategoryPress={handleCategoryPress}
         />
-        
+
         <View style={styles.separator} />
-        
+
         <Text style={styles.sectionTitle}>Nomes Ultra Curtos</Text>
-        <CategoryList 
+        <CategoryList
           categories={tinyNameCategories}
           title="Categorias"
           onCategoryPress={handleCategoryPress}
@@ -98,12 +101,12 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Theme.colors.gray[700],
     marginBottom: 8,
     marginLeft: 16,
   },
   separator: {
     height: 24,
-  }
-}); 
+  },
+});

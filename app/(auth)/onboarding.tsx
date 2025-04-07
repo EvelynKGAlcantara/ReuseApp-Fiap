@@ -38,7 +38,7 @@ export default function OnboardingScreen() {
   const flatListRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const handlePular = () => {
-    router.replace("/(tabs)/selecione-cidade");
+    router.replace("/(auth)/selecione-cidade");
   };
 
   const handleScroll = (event: {

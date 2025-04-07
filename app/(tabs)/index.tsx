@@ -1,197 +1,230 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Platform, StatusBar } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { Link, router } from 'expo-router';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { ItemCard } from "../components/cards/card-produto";
+import { LocationBox } from "../components/buttons/botao-localizacao";
+import { SearchWithFilter } from "../components/buttons/busca-filtragem";
+import { router } from "expo-router";
+import Cabecalho from "../components/header/cabecalho";
 
-export default function HomeScreen() {
-  const navigateToProfile = () => {
-    router.push('/(tabs)/perfil');
-  };
+type Categoria = {
+  id: number;
+  nome: string;
+  icone: any;
+};
+
+const categorias: Categoria[] = [
+  { id: 1, nome: "Roupas", icone: "shirt-outline" },
+  { id: 2, nome: "Casa", icone: "home-outline" },
+  { id: 3, nome: "Eletrônicos", icone: "laptop-outline" },
+  { id: 4, nome: "Acessórios", icone: "watch-outline" },
+  { id: 5, nome: "Outros", icone: "ellipsis-horizontal-outline" },
+];
+
+const products = new Array(6).fill({
+  title: "Gradient Graphic T-shirt",
+  description: "Descrição do produto",
+  imageUri:
+    "https://images.pexels.com/photos/3757055/pexels-photo-3757055.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+  rating: 4.5,
+});
+
+const goToSearch = () => {
+  router.push("/(tabs)/busca");
+};
+
+const goToCategoryItems = () => {
+  router.push("/screens/itens-de-categoria");
+};
+
+export default function HomePage() {
+  const renderItem = ({ item }: any) => (
+    <ItemCard
+      imageSource={{ uri: item.imageUri }}
+      ratingComponent={
+        <>
+          {[...Array(Math.floor(item.rating))].map((_, index) => (
+            <Ionicons key={index} name="star" size={16} color="gold" />
+          ))}
+          {item.rating % 1 !== 0 && (
+            <Ionicons name="star-half" size={16} color="gold" />
+          )}
+          <Text style={{ marginLeft: 5 }}>{item.rating}/5</Text>
+        </>
+      }
+      title={item.title}
+      description={item.description}
+    />
+  );
+
+  const renderCategory = (title: string) => (
+    <View style={styles.section}>
+      <View style={styles.sectionHeader}>
+        <Text style={styles.sectionTitle}>{title}</Text>
+        <TouchableOpacity>
+          <Text style={styles.viewAll}>Ver todos</Text>
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        data={products}
+        renderItem={renderItem}
+        keyExtractor={(_, index) => `${title}-${index}`}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.horizontalList}
+      />
+    </View>
+  );
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* Conteúdo */}
-      <View style={styles.content}>
-        <Text style={styles.welcomeText}>Bem-vindo ao ReUse!</Text>
-        <Text style={styles.subText}>Compartilhe e encontre itens para reutilização</Text>
-        
-        <TouchableOpacity 
-          style={[styles.button, styles.primaryButton]}
-          onPress={() => router.push('/suas-publicacoes')}
-        >
-          <Text style={styles.buttonText}>Suas Publicações</Text>
-          <Ionicons name="documents-outline" size={20} color="#fff" />
-        </TouchableOpacity>
+    <View style={styles.container}>
+      <Cabecalho />
 
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={() => router.push('/product-details')}
-        >
-          <Text style={styles.buttonText}>Ver Detalhes do Produto</Text>
-        </TouchableOpacity>
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+        <Text style={styles.greeting}>Olá, Henrique 👋</Text>
 
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={navigateToProfile}
-        >
-          <Text style={styles.buttonText}>Ver Perfil</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={() => router.push('/proposta-recebida')}
-        >
-          <Text style={styles.buttonText}>Ver Proposta Recebida</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={() => router.push('/detalhes-produto')}
-        >
-          <Text style={styles.buttonText}>Ver Nova Tela de Produto</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={() => router.push('/avaliacao')}
-        >
-          <Text style={styles.buttonText}>Fazer Avaliação</Text>
-        </TouchableOpacity>
-
-        <View style={styles.authButtons}>
-          <TouchableOpacity 
-            style={[styles.button, styles.loginButton]}
-            onPress={() => router.push('/login')}
-          >
-            <Text style={styles.loginButtonText}>Entrar</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity 
-            style={[styles.button, styles.registerButton]}
-            onPress={() => router.push('/registro')}
-          >
-            <Text style={styles.registerButtonText}>Cadastrar</Text>
-          </TouchableOpacity>
+        <View style={styles.locationContainer}>
+          <LocationBox
+            location="Uberlândia/MG"
+            onEdit={() => console.log("Editar localização")}
+          />
         </View>
-      </View>
-    </SafeAreaView>
+
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.categoriasContainer}
+        >
+          {categorias.map((categoria) => (
+            <TouchableOpacity
+              key={categoria.id}
+              style={styles.categoriaItem}
+              onPress={goToCategoryItems}
+            >
+              <View style={styles.categoriaIcone}>
+                <Ionicons name={categoria.icone} size={20} color="#2A4BA0" />
+              </View>
+              <Text style={styles.categoriaNome}>{categoria.nome}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+
+        <View style={styles.filtercontent}>
+          <SearchWithFilter
+            onSearchChange={(text) => console.log("Busca:", text)}
+            onFilterPress={goToSearch}
+          />
+        </View>
+
+        {renderCategory("Em destaque")}
+        {renderCategory("Roupas")}
+        {renderCategory("Para sua casa")}
+        {renderCategory("Calçados")}
+        {renderCategory("Outros")}
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f8f8f8',
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-  },
+  container: { flex: 1, backgroundColor: "#22408C" },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#4A80F0',
-    paddingVertical: 18,
+    marginTop: 50,
+    paddingHorizontal: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
-  logo: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#ffffff',
-  },
-  notificationButton: {
-    position: 'relative',
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  notificationBadge: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    backgroundColor: '#FF3B30',
-    width: 18,
-    height: 18,
-    borderRadius: 9,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  notificationBadgeText: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
+  brand: { fontSize: 22, fontWeight: "bold", color: "#FFF" },
+  brandAccent: { color: "#FDB813" },
   content: {
+    backgroundColor: "#FFF",
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 30,
+    paddingBottom: 30,
   },
-  welcomeText: {
-    fontSize: 28,
-    fontWeight: 'bold',
+  greeting: {
+    fontSize: 18,
+    fontWeight: "600",
     marginBottom: 10,
-    textAlign: 'center',
-    color: '#333',
+    alignItems: "center",
+    color: "#2A4BA0",
   },
-  subText: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 40,
-    color: '#666',
+  locationContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 12,
+    padding: 10,
+    marginBottom: 20,
   },
-  button: {
-    flexDirection: 'row',
-    backgroundColor: '#4A80F0',
-    paddingVertical: 15,
-    paddingHorizontal: 25,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '80%',
-    maxWidth: 300,
-    marginBottom: 15,
+  locationText: { fontSize: 14, color: "#2A4BA0" },
+  bold: { fontWeight: "bold" },
+  categoriesList: { marginBottom: 20 },
+  categoryItem: {
+    alignItems: "center",
+    marginRight: 16,
   },
-  primaryButton: {
-    backgroundColor: '#2A4BA0',
-    borderWidth: 2,
-    borderColor: '#F9B023',
+  categoryIcon: { width: 60, height: 60, borderRadius: 30, marginBottom: 4 },
+  categoryText: { fontSize: 12 },
+  searchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#F0F0F0",
+    borderRadius: 12,
+    padding: 10,
+    marginBottom: 20,
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginRight: 10,
-  },
-  authButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 16,
-    paddingHorizontal: 16,
-    width: '80%',
-    maxWidth: 300,
-  },
-  loginButton: {
-    backgroundColor: '#2A4BA0',
+  searchInput: {
+    marginLeft: 10,
     flex: 1,
-    marginRight: 8,
-    marginBottom: 0,
+    fontSize: 14,
   },
-  registerButton: {
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#2A4BA0',
-    flex: 1,
-    marginLeft: 8,
-    marginBottom: 0,
+  section: { marginBottom: 30 },
+  sectionHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 10,
   },
-  loginButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+  sectionTitle: { fontSize: 18, fontWeight: "bold" },
+  viewAll: { color: "#22408C", fontSize: 14 },
+  horizontalList: { gap: 16 },
+  bottomTab: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingVertical: 10,
+    backgroundColor: "#22408C",
   },
-  registerButtonText: {
-    color: '#2A4BA0',
-    fontWeight: 'bold',
+  categoriasContainer: {
+    paddingBottom: 16,
+  },
+  categoriaItem: {
+    alignItems: "center",
+    marginRight: 16,
+  },
+  categoriaIcone: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: "#f0f0f0",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 4,
+  },
+
+  categoriaNome: {
+    fontSize: 12,
+    color: "#555",
+  },
+  filtercontent: {
+    marginBottom: 30,
   },
 });
