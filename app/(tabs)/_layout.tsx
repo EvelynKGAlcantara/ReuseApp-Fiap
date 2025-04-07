@@ -76,7 +76,7 @@ export default function TabLayout() {
           title: "Trocas",
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <Ionicons name="document-outline" size={24} color={color} />
+            <Ionicons name="swap-horizontal" size={24} color={color} />
           ),
         }}
       />

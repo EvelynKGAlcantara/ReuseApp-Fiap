@@ -25,6 +25,12 @@ cd ReuseApp-Fiap
 npm install
 ```
 
+#### Caso seja necessário
+
+```bash
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
 ```bash
 npx expo start
 ```

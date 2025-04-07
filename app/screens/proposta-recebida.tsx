@@ -135,8 +135,8 @@ export default function PropostaRecebida() {
               title="Recusar"
               onPress={() => router.replace("/(tabs)")}
               backgroundColor="transparent"
-              borderColor="#2A4BA0"
-              textColor="#2A4BA0"
+              borderColor="red"
+              textColor="red"
             />
           </View>
 
@@ -293,11 +293,11 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "white" },
   content: { padding: 16 },
   subTitle: {
-    fontSize: 36,
+    fontSize: 26,
     fontWeight: "bold",
     color: "#000",
     marginBottom: 20,
-    textAlign: "center",
+    textAlign: "left",
   },
   sellerContainer: {
     flexDirection: "row",

@@ -10,6 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { ItemCard } from "../components/cards/card-produto";
 import { router } from "expo-router";
+import Cabecalho from "../components/header/cabecalho";
 
 interface Product {
   id: string;
@@ -75,16 +76,7 @@ export default function CategoriaProduto() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#FFF" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>
-          Re<Text style={{ color: "#FDB813" }}>Use</Text>
-        </Text>
-        <View style={{ width: 24 }} />
-      </View>
-
+      <Cabecalho />
       <View style={styles.content}>
         <Text style={styles.categoryTitle}>Roupas</Text>
         <Text style={styles.categorySubtitle}>
@@ -104,17 +96,8 @@ export default function CategoriaProduto() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#22408C",
-  },
-  header: {
-    marginTop: 50,
-    paddingHorizontal: 20,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
+  container: { flex: 1, backgroundColor: "#22408C" },
+
   headerTitle: {
     fontSize: 20,
     fontWeight: "bold",
@@ -123,11 +106,9 @@ const styles = StyleSheet.create({
   content: {
     backgroundColor: "#FFF",
     flex: 1,
-    marginTop: 20,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
     paddingHorizontal: 20,
     paddingTop: 30,
+    paddingBottom: 30,
   },
   categoryTitle: {
     fontSize: 26,

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import Cabecalho from "../components/header/cabecalho";
 
 type Mensagem = {
   id: string;
@@ -25,18 +26,7 @@ export default function MensagensScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Mensagens</Text>
-        <TouchableOpacity
-          style={styles.notificationButton}
-          onPress={() => router.push("/screens/notificacoes")}
-        >
-          <Ionicons name="notifications-outline" size={24} color="#000" />
-          <View style={styles.notificationBadge}>
-            <Text style={styles.notificationBadgeText}>3</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <Cabecalho />
 
       {mensagens.length === 0 ? (
         <View style={styles.emptyState}>

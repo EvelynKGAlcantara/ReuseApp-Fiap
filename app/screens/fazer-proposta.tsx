@@ -21,13 +21,14 @@ export default function FazerProposta() {
       <Cabecalho />
 
       <ScrollView showsVerticalScrollIndicator={false} style={styles.content}>
-        <View>
-          <Text style={styles.subTitle}>Faça uma proposta</Text>
+        <View style={styles.headerSection}>
+          <Text style={styles.title}>Faça uma proposta</Text>
         </View>
 
-        <View style={styles.selectedItem}>
-          <Text style={styles.sectionTitle}>Item selecionado:</Text>
-          <View style={styles.imageView}>
+        <View style={styles.selectedItemSection}>
+          <Text style={styles.sectionLabel}>Item selecionado:</Text>
+
+          <View style={styles.imageBox}>
             <Image
               source={{
                 uri: "https://cdn.shopify.com/s/files/1/0603/7533/5145/products/11front2xsmall_b526b564-8e95-4054-b3f4-4386cc0aeab7.jpg?v=1649764627",
@@ -35,16 +36,14 @@ export default function FazerProposta() {
               style={styles.image}
             />
           </View>
-          <View style={styles.itemNameSection}>
-            <Text style={styles.itemName}>Gradiente Graphic T-Shirt</Text>
-          </View>
+          <Text style={styles.itemLabel}>Gradient Graphic T-shirt</Text>
         </View>
 
-        <View style={styles.infoSection}>
-          <Text style={styles.sectionTitle}>
+        <View style={styles.instructionSection}>
+          <Text style={styles.instructionTitle}>
             Selecione um ou mais itens para oferecer em troca
           </Text>
-          <Text style={styles.sectionDescription}>
+          <Text style={styles.instructionText}>
             O ofertante poderá escolher um ou mais dos que você está oferecendo
           </Text>
         </View>
@@ -54,48 +53,46 @@ export default function FazerProposta() {
             imageSource={{
               uri: "https://images.pexels.com/photos/3757055/pexels-photo-3757055.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
             }}
-            title="Gradient Graphic T-shirt"
-            description="Camiseta confortável com gradiente colorido"
-            showCheckbox
+            title="Camiseta preta M"
+            description="Tá novinha. Terminei com a namorada e preciso trocar por outra. Esse é o motivo."
+            showCheckbox={true}
             checked={checked}
             onCheckChange={() => setChecked(!checked)}
           />
-
           <ItemCard
             imageSource={{
-              uri: "https://osklenbr.vteximg.com.br/arquivos/ids/474914/666820424_camisa_1.jpg?v=638404264055030000",
+              uri: "https://images.pexels.com/photos/6311603/pexels-photo-6311603.jpeg",
             }}
-            title="Camisa xadrez"
-            description="Camiseta confortável com estampa para forró"
-            showCheckbox
+            title="Camiseta preta M"
+            description="Tá novinha. Terminei com a namorada e preciso trocar por outra. Esse é o motivo."
+            showCheckbox={true}
             checked={checked}
             onCheckChange={() => setChecked(!checked)}
           />
-
           <ItemCard
             imageSource={{
-              uri: "https://drogariasp.vteximg.com.br/arquivos/ids/445679-1000-1000/Escova-Dental-Colgate-Gengiva-Therapy-1-Unidade-727733-4.jpg?v=637517779391400000",
+              uri: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg",
             }}
-            title="Escova de dentes elétrica"
-            description="Praticamente nova (usada somente 1 vez)"
-            showCheckbox
+            title="Camiseta preta M"
+            description="Tá novinha. Terminei com a namorada e preciso trocar por outra. Esse é o motivo."
+            showCheckbox={true}
             checked={checked}
             onCheckChange={() => setChecked(!checked)}
           />
         </View>
 
-        <View style={styles.buttonArea}>
-          <View style={styles.buttonStyle}>
+        <View style={styles.buttonSection}>
+          <View style={styles.buttonSpacing}>
             <CustomButton
               title="Quero cadastrar mais itens"
-              onPress={() => alert("Botão Pressionado!")}
+              onPress={() => alert("Cadastrar mais itens")}
               backgroundColor="transparent"
               borderColor="#2A4BA0"
               textColor="#2A4BA0"
             />
           </View>
 
-          <View style={styles.buttonStyle}>
+          <View>
             <CustomButton
               title="Concluir proposta"
               onPress={() => router.push("/screens/proposta-concluida")}
@@ -109,76 +106,82 @@ export default function FazerProposta() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "white" },
-  content: { padding: 16 },
-  subTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
+  container: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
+  content: {
+    paddingHorizontal: 16,
+    paddingTop: 8,
+  },
+  headerSection: {
+    marginBottom: 24,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "900",
+    color: "#000",
+    textAlign: "left",
+  },
+  selectedItemSection: {
+    alignItems: "center",
+    marginBottom: 32,
+  },
+  sectionLabel: {
+    fontSize: 16,
+    fontWeight: "500",
     color: "#000",
     marginBottom: 12,
   },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: "600",
-    color: "#000",
-    paddingBottom: 8,
-    textAlign: "center",
-    lineHeight: 20,
+  imageBox: {
+    backgroundColor: "#F3F3F3",
+    borderRadius: 12,
+    width: 140,
+    height: 140,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 6,
   },
-  sectionDescription: {
+  image: {
+    width: 110,
+    height: 110,
+    resizeMode: "contain",
+  },
+  itemLabel: {
+    fontSize: 10,
+    fontWeight: "500",
+    color: "#000",
+  },
+  instructionSection: {
+    alignItems: "center",
+    paddingHorizontal: 8,
+    marginBottom: 24,
+  },
+  instructionTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#000",
+    textAlign: "center",
+    lineHeight: 24,
+    marginBottom: 8,
+  },
+  instructionText: {
     fontSize: 14,
     fontWeight: "400",
     color: "#808080",
-    marginBottom: 12,
     textAlign: "center",
     lineHeight: 20,
   },
-  itemNameSection: {
-    width: "55%",
-  },
-  itemName: {
-    fontSize: 10,
-    fontWeight: "600",
-    color: "#000",
-  },
-  selectedItem: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingBottom: 24,
-  },
   itemsList: {
-    display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    rowGap: 16,
   },
-  image: {
-    width: "100%",
-    height: 150,
-    resizeMode: "cover",
+  buttonSection: {
+    marginTop: 32,
+    marginBottom: 24,
+    paddingHorizontal: 16,
   },
-  infoSection: {
-    display: "flex",
-    paddingBottom: 24,
-  },
-  imageView: {
-    backgroundColor: "#FFF",
-    borderRadius: 10,
-    overflow: "hidden",
-    elevation: 3,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    position: "relative",
-    width: "55%",
-  },
-  buttonStyle: {
-    paddingBottom: 12,
-  },
-  buttonArea: {
-    paddingTop: 32,
-    paddingBottom: 12,
+  buttonSpacing: {
+    marginBottom: 12,
   },
 });

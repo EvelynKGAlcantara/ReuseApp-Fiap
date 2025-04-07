@@ -11,6 +11,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import LocationMap from "../components/LocationMap";
+import CustomButton from "@/components/CustomButton";
 
 const ProductDetailsScreen = () => {
   const [isFavorite, setIsFavorite] = React.useState(false);
@@ -51,7 +52,10 @@ const ProductDetailsScreen = () => {
         <TouchableOpacity onPress={handleBack} style={styles.headerButton}>
           <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>ReUse</Text>
+        <Text style={styles.logoTitle}>
+          <Text style={styles.logo}>Re</Text>
+          <Text style={styles.logoUse}>Use</Text>
+        </Text>
         <TouchableOpacity onPress={handleFavorite} style={styles.headerButton}>
           <Ionicons
             name={isFavorite ? "heart" : "heart-outline"}
@@ -65,7 +69,7 @@ const ProductDetailsScreen = () => {
         {/* Product Image Container */}
         <View style={styles.productImageContainer}>
           <Image
-            source={require("../../assets/images/just-walk.jpg")}
+            source={require("../../assets/images/CamisetaM.jpeg")}
             style={styles.productImage}
             resizeMode="contain"
           />
@@ -78,15 +82,13 @@ const ProductDetailsScreen = () => {
         </View>
 
         {/* Product Title */}
-        <Text style={styles.productTitle}>Gradient Graphic T-shirt</Text>
-        <Text style={styles.productDescription}>
-          Camiseta com estampa gradiente colorida e perfeita para seu estilo.
-        </Text>
+        <Text style={styles.productTitle}>Camiseta M, algodão</Text>
+        <Text style={styles.productDescription}>Camiseta preta básica.</Text>
 
         {/* Seller Info */}
         <TouchableOpacity
           style={styles.sellerInfo}
-          onPress={() => router.push("/screens/perfil")}
+          onPress={() => router.push("/screens/perfil-ofertante")}
         >
           <View style={styles.sellerContainer}>
             <Image
@@ -134,24 +136,26 @@ const ProductDetailsScreen = () => {
         </View>
       </ScrollView>
 
-      {/* Bottom Buttons */}
       <View style={styles.bottomButtons}>
-        <TouchableOpacity
-          style={styles.messageButton}
-          activeOpacity={0.7}
-          onPress={() => router.push("/screens/mensagens")}
-        >
-          <Text style={styles.messageButtonText}>Mandar Mensagem</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.offerButton}
-          activeOpacity={0.7}
-          onPress={() => router.push("/screens/fazer-proposta")}
-        >
-          <Text style={styles.offerButtonText}>
-            Quero trocar (fazer oferta)
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.buttonArea}>
+          <View style={styles.buttonStyle}>
+            <CustomButton
+              title="Mandar Mensagem"
+              onPress={() => router.push("/screens/mensagens")}
+              backgroundColor="transparent"
+              borderColor="#2A4BA0"
+              textColor="#2A4BA0"
+            />
+          </View>
+
+          <View style={styles.buttonStyle}>
+            <CustomButton
+              title="Quero Trocar (Fazer Oferta)"
+              onPress={() => router.push("/screens/fazer-proposta")}
+              borderColor="#2A4BA0"
+            />
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -167,7 +171,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "#2A4BA0",
-    paddingTop: 50,
+    paddingTop: 20,
     paddingBottom: 16,
     paddingHorizontal: 16,
   },
@@ -338,6 +342,25 @@ const styles = StyleSheet.create({
   sellerLabel: {
     fontSize: 14,
     color: "#8B96A0",
+  },
+  buttonStyle: {
+    paddingBottom: 12,
+  },
+  buttonArea: {
+    paddingTop: 32,
+  },
+  logoTitle: {
+    display: "flex",
+  },
+  logo: {
+    fontSize: 24,
+    fontWeight: "400",
+    color: "#ffffff",
+  },
+  logoUse: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#f9b023",
   },
 });
 
