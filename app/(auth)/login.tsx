@@ -1,14 +1,16 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
+import { useAuth } from "@/context/AuthContext";
+import { setData } from "@/services/storage";
 import { Ionicons } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
-import { useAuth } from "@/context/AuthContext";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -31,10 +33,16 @@ const LoginScreen = () => {
     }
   };
 
-  const handleLogin = () => {
-    // Em uma aplicação real, validaria os dados aqui
-    setIsLoggedIn(true);
-    router.replace("/(tabs)");
+  const handleLogin = async () => {
+    try {
+      await setData('@user_email', email);
+      await setData('@user_token', 'fake-jwt-token');
+
+      setIsLoggedIn(true);
+      router.replace("/(tabs)");
+    } catch (e) {
+      console.error("Erro ao armazenar dados no AsyncStorage", e);
+    }
   };
 
   return (

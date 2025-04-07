@@ -146,29 +146,6 @@ const AvaliacaoScreen = () => {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-
-      <View style={styles.tabBar}>
-        <TouchableOpacity style={styles.tabItem}>
-          <Ionicons name="home-outline" size={24} color="#777" />
-          <Text style={styles.tabLabel}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem}>
-          <Ionicons name="search-outline" size={24} color="#777" />
-          <Text style={styles.tabLabel}>Search</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem}>
-          <Ionicons name="copy-outline" size={24} color="#777" />
-          <Text style={styles.tabLabel}>Publicações</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.tabItem, styles.tabItemActive]}>
-          <Ionicons name="heart" size={24} color="#2A4BA0" />
-          <Text style={styles.tabLabelActive}>Trocas</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem}>
-          <Ionicons name="menu-outline" size={24} color="#777" />
-          <Text style={styles.tabLabel}>Menu</Text>
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 };

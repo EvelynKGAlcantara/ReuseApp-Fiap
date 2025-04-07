@@ -6,6 +6,7 @@ import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
 import { ImageButton } from "../components/buttons/botao-tracejado";
 import { useRouter } from "expo-router";
+import { Picker } from "@react-native-picker/picker";
 
 export default function PublicarItem() {
   const [productName, setProductName] = useState("");
@@ -87,21 +88,38 @@ export default function PublicarItem() {
                 style={styles.textBox}
               />
 
-              <CustomInput
-                label="Categoria"
-                size="md"
-                placeholder="Selecione"
-                value={category}
-                onChangeText={setCategory}
-              />
+              <View style={{ marginBottom: 16 }}>
+                <Text style={styles.label}>Categoria</Text>
+                <View style={styles.pickerContainer}>
+                  <Picker
+                    selectedValue={category}
+                    onValueChange={(itemValue) => setCategory(itemValue)}
+                  >
+                    <Picker.Item label="Selecione" value="" />
+                    <Picker.Item label="Roupas" value="roupas" />
+                    <Picker.Item label="Calçados" value="calcados" />
+                    <Picker.Item label="Eletrônicos" value="eletronicos" />
+                    <Picker.Item label="Livros" value="livros" />
+                    {/* Adicione mais categorias aqui */}
+                  </Picker>
+                </View>
+              </View>
+              <View style={{ marginBottom: 16 }}>
+                <Text style={styles.label}>Estado de conservação</Text>
+                <View style={styles.pickerContainer}>
+                  <Picker
+                    selectedValue={state}
+                    onValueChange={(itemValue) => setState(itemValue)}
+                  >
+                    <Picker.Item label="Selecione" value="" />
+                    <Picker.Item label="Novo" value="novo" />
+                    <Picker.Item label="Usado - Pouco uso" value="pouco_uso" />
+                    <Picker.Item label="Usado - Muito uso" value="muito_uso" />
+                    <Picker.Item label="Para peças" value="pecas" />
+                  </Picker>
+                </View>
+              </View>
 
-              <CustomInput
-                label="Estado de conservação"
-                size="md"
-                placeholder="Selecione"
-                value={state}
-                onChangeText={setState}
-              />
               <View style={styles.imageUploadArea}>
                 <ImageButton
                   source={require("../../assets/images/image-buttons/image-icon.png")}
@@ -141,7 +159,7 @@ export default function PublicarItem() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#ffffff",
     paddingBottom: 16,
     display: "flex",
   },
@@ -177,5 +195,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
     paddingBottom: 16,
+  },
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
   },
 });

@@ -1,14 +1,27 @@
-import { Tabs } from "expo-router";
-import React from "react";
-import { Platform } from "react-native";
+import { getData } from "@/services/storage";
 import { Ionicons } from "@expo/vector-icons";
+import { Tabs, useRouter } from "expo-router";
+import React, { useEffect } from "react";
+import { Platform } from "react-native";
 
 export const screenOptions = {
   headerShown: false,
 };
 
 export default function TabLayout() {
-  // const colorScheme = useColorScheme();
+  const router = useRouter();
+
+  const validateLogin = async () => {
+    const userToken = await getData('@user_token');
+
+    if (!userToken) {
+      router.replace("/login");
+    }
+  };
+
+  useEffect(() => {
+    validateLogin();
+  }, []);
 
   return (
     <Tabs
