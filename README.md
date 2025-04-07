@@ -13,6 +13,9 @@ Aplicativo desenvolvido em **React Native** com **Expo**, como parte de um proje
 
 ```bash
 git clone https://github.com/EvelynKGAlcantara/ReuseApp-Fiap.git
+```
+
+```bash
 cd ReuseApp-Fiap
 ```
 
@@ -20,5 +23,8 @@ cd ReuseApp-Fiap
 
 ```bash
 npm install
+```
+
+```bash
 npx expo start
 ```
