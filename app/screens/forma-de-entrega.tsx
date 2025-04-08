@@ -71,7 +71,7 @@ const DeliverySelectionScreen = () => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={{ paddingBottom: 24 }}>
-        <Text style={styles.titulo}>Publicar Item</Text>
+        <Text style={styles.titulo}>Forma de Entrega</Text>
         <View style={styles.headerRow}>
           <Image
             source={require("../../assets/images/images-telas/Caminhaozinho.png")}

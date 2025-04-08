@@ -148,7 +148,7 @@ export default function ProposalsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f5f5f5" },
+  container: { flex: 1, backgroundColor: "#FFFFFF" },
   header: { backgroundColor: "#4A80F0", padding: 16, alignItems: "center" },
   logo: { color: "#fff", fontSize: 18, fontWeight: "bold" },
   tabContainer: { flexDirection: "row", justifyContent: "center", margin: 16 },
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   subTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#000",
     marginBottom: 12,

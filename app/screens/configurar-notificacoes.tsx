@@ -93,19 +93,6 @@ export default function ConfigurarNotificacoes() {
             />
           </View>
 
-          <View style={styles.menuItem}>
-            <Text style={styles.menuItemText}>Som de Notificação</Text>
-            <Switch
-              trackColor={{ false: "#767577", true: "#81b0ff" }}
-              thumbColor={notificationSound ? "#f5dd4b" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={() =>
-                setNotificationSound((previousState) => !previousState)
-              }
-              value={notificationSound}
-            />
-          </View>
-
           <View style={styles.buttonArea}>
             <View style={styles.buttonStyle}>
               <CustomButton
@@ -119,7 +106,7 @@ export default function ConfigurarNotificacoes() {
 
             <View style={styles.buttonStyle}>
               <CustomButton
-                title="Publicar"
+                title="Salvar"
                 onPress={() => alert("Botão Pressionado!")}
                 borderColor="#2A4BA0"
               />

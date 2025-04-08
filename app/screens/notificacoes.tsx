@@ -162,7 +162,7 @@ export default function NotificacoesScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Sub-header */}
+      <Cabecalho />
       <View style={styles.subHeader}>
         <Text style={styles.subHeaderTitle}>Notificações</Text>
         <TouchableOpacity
@@ -211,8 +211,7 @@ export default function NotificacoesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f8f8f8",
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    backgroundColor: "#ffffff",
   },
   header: {
     flexDirection: "row",
