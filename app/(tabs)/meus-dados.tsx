@@ -3,6 +3,7 @@ import ImageUpload from "@/components/ImageUpload";
 import { removeData } from "@/services/storage";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import MapView from "react-native-maps";
 import React, { useState } from "react";
 import {
   SafeAreaView,
@@ -78,6 +79,7 @@ export default function MeusDados() {
 
           <View style={styles.mapSection}>
             <Text style={styles.sectionTitle}>Localização</Text>
+            <MapView style={{ flex: 1 }} />
             <LocationMap
               address="Rua Central"
               number="100"
@@ -85,6 +87,11 @@ export default function MeusDados() {
               city="Uberlândia"
               state="MG"
               remove
+            />
+
+            <MapView
+              style={{ flex: 1 }}
+              onPress={(param) => console.log(param, "Hello World")}
             />
           </View>
 

@@ -100,15 +100,16 @@
     "react-test-renderer": "18.3.1",
     "typescript": "^5.3.3"
   },
-  "expo": {
-    "plugins": [
-      [
-        "expo-location",
-        {
-          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
-        }
-      ]
+  "android": {
+    "permissions": [
+      "ACCESS_FINE_LOCATION",
+      "ACCESS_COARSE_LOCATION"
     ]
+  },
+  "ios": {
+    "infoPlist": {
+      "NSLocationWhenInUseUsageDescription": "Este app precisa da sua localização para mostrar o mapa."
+    }
   },
   "private": true
 }
