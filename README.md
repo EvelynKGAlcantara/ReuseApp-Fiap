@@ -19,18 +19,18 @@ git clone https://github.com/EvelynKGAlcantara/ReuseApp-Fiap.git
 cd ReuseApp-Fiap
 ```
 
+```bash
+npm install
+```
+
 ### Para rodar o projeto:
 
 ```bash
-npm install
+npx expo start
 ```
 
 #### Caso seja necessário
 
 ```bash
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-```
-
-```bash
-npx expo start
 ```
