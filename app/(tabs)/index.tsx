@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -6,6 +6,10 @@ import {
   FlatList,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
+  RefreshControl,
+  Alert,
+  Button,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { ItemCard } from "../components/cards/card-produto";
@@ -13,6 +17,7 @@ import { LocationBox } from "../components/buttons/botao-localizacao";
 import { SearchWithFilter } from "../components/buttons/busca-filtragem";
 import { router } from "expo-router";
 import Cabecalho from "../components/header/cabecalho";
+import { getCacheData, setCacheData } from "../../services/storage";
 
 type Categoria = {
   id: number;
@@ -28,14 +33,6 @@ const categorias: Categoria[] = [
   { id: 5, nome: "Outros", icone: "ellipsis-horizontal-outline" },
 ];
 
-const products = new Array(6).fill({
-  title: "Gradient Graphic T-shirt",
-  description: "Descrição do produto",
-  imageUri:
-    "https://images.pexels.com/photos/3757055/pexels-photo-3757055.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-  rating: 4.5,
-});
-
 const goToSearch = () => {
   router.push("/(tabs)/busca");
 };
@@ -45,6 +42,78 @@ const goToCategoryItems = () => {
 };
 
 export default function HomePage() {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  const loadProducts = async (forceRefresh = false) => {
+    try {
+      setError(null);
+      
+      if (!forceRefresh) {
+        // Tenta carregar do cache primeiro
+        const cachedProducts = await getCacheData('@cache_home_products');
+        if (cachedProducts) {
+          setProducts(cachedProducts);
+          setLoading(false);
+          return;
+        }
+      }
+
+      // Se não houver cache ou forceRefresh for true, carrega da API
+      const response = await fetch('sua-api/produtos');
+      if (!response.ok) {
+        throw new Error('Erro ao carregar produtos');
+      }
+      
+      const data = await response.json();
+      
+      // Salva no cache
+      await setCacheData('@cache_home_products', data);
+      setProducts(data);
+    } catch (error) {
+      console.error('Erro ao carregar produtos:', error);
+      setError('Não foi possível carregar os produtos. Tente novamente.');
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    loadProducts(true);
+  };
+
+  const showCache = async () => {
+    const cache = await getCacheData('@cache_home_products');
+    Alert.alert('Cache Home', JSON.stringify(cache, null, 2));
+  };
+
+  if (loading) {
+    return (
+      <View style={[styles.container, styles.centerContent]}>
+        <ActivityIndicator size="large" color="#2A4BA0" />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={[styles.container, styles.centerContent]}>
+        <Text style={styles.errorText}>{error}</Text>
+        <TouchableOpacity style={styles.retryButton} onPress={() => loadProducts(true)}>
+          <Text style={styles.retryButtonText}>Tentar Novamente</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
   const renderItem = ({ item }: any) => (
     <ItemCard
       imageSource={{ uri: item.imageUri }}
@@ -87,7 +156,17 @@ export default function HomePage() {
     <View style={styles.container}>
       <Cabecalho />
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView 
+        style={styles.content} 
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={handleRefresh}
+            colors={["#2A4BA0"]}
+          />
+        }
+      >
         <Text style={styles.greeting}>Olá, Henrique 👋</Text>
 
         <View style={styles.locationContainer}>
@@ -129,6 +208,8 @@ export default function HomePage() {
         {renderCategory("Calçados")}
         {renderCategory("Outros")}
       </ScrollView>
+
+      <Button title="Ver Cache Home" onPress={showCache} />
     </View>
   );
 }
@@ -226,5 +307,26 @@ const styles = StyleSheet.create({
   },
   filtercontent: {
     marginBottom: 30,
+  },
+  centerContent: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorText: {
+    color: '#FF3B30',
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  retryButton: {
+    backgroundColor: '#2A4BA0',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 8,
+  },
+  retryButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });

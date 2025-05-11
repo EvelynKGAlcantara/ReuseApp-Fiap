@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  ActivityIndicator,
+  RefreshControl,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { ItemCard } from "../components/cards/card-produto";
 import { router } from "expo-router";
 import Cabecalho from "../components/header/cabecalho";
+import { getCacheData, setCacheData } from "../../services/storage";
 
 interface Product {
   id: string;
@@ -20,35 +23,57 @@ interface Product {
   rating: number;
 }
 
-const products: Product[] = [
-  {
-    id: "1",
-    title: "Camiseta M, algodão",
-    description:
-      "Tá novinha. Terminei com a namorada e preciso trocar por outra.",
-    imageUri:
-      "https://www.hering.com.br/_next/image?url=https%3A%2F%2Fhering.vtexassets.com%2Farquivos%2Fids%2F3200270%2FKG99-N10SI-C1.jpg%3Fv%3D638775811091870000&w=1440&q=100",
-    rating: 4.5,
-  },
-  {
-    id: "2",
-    title: "Jaqueta jeans, G",
-    description: "Pouco usada. Estilo vintage, perfeita pro friozinho.",
-    imageUri:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtgmTkWAqu2gAwcWWC-Qpt03yaZ8tIKB-hGA&s.jpg",
-    rating: 4.5,
-  },
-  {
-    id: "3",
-    title: "Vestido floral P",
-    description: "Usado uma vez só no casamento da prima.",
-    imageUri:
-      "https://images.tcdn.com.br/img/img_prod/798207/vestido_lais_chiffon_floral_soltinho_manga_laco_e_rendas_verde_menta_3251_1_95f9f171d5986676aa584509527bb3e8.jpg",
-    rating: 5.0,
-  },
-];
-
 export default function CategoriaProduto() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [categoryName, setCategoryName] = useState("Roupas");
+
+  useEffect(() => {
+    loadCategoryProducts();
+  }, []);
+
+  const loadCategoryProducts = async (forceRefresh = false) => {
+    try {
+      setError(null);
+      const cacheKey = `@cache_category_${categoryName.toLowerCase()}`;
+      
+      if (!forceRefresh) {
+        // Tenta carregar do cache primeiro
+        const cachedProducts = await getCacheData(cacheKey);
+        if (cachedProducts) {
+          setProducts(cachedProducts);
+          setLoading(false);
+          return;
+        }
+      }
+
+      // Se não houver cache ou forceRefresh for true, carrega da API
+      const response = await fetch(`sua-api/categorias/${categoryName}`);
+      if (!response.ok) {
+        throw new Error('Erro ao carregar produtos da categoria');
+      }
+      
+      const data = await response.json();
+      
+      // Salva no cache
+      await setCacheData(cacheKey, data);
+      setProducts(data);
+    } catch (error) {
+      console.error('Erro ao carregar produtos da categoria:', error);
+      setError('Não foi possível carregar os produtos. Tente novamente.');
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    loadCategoryProducts(true);
+  };
+
   const renderItem = ({ item }: { item: Product }) => (
     <TouchableOpacity onPress={goToDetails}>
       <ItemCard
@@ -74,11 +99,30 @@ export default function CategoriaProduto() {
     router.push("/screens/product-details");
   };
 
+  if (loading) {
+    return (
+      <View style={[styles.container, styles.centerContent]}>
+        <ActivityIndicator size="large" color="#2A4BA0" />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={[styles.container, styles.centerContent]}>
+        <Text style={styles.errorText}>{error}</Text>
+        <TouchableOpacity style={styles.retryButton} onPress={() => loadCategoryProducts(true)}>
+          <Text style={styles.retryButtonText}>Tentar Novamente</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Cabecalho />
       <View style={styles.content}>
-        <Text style={styles.categoryTitle}>Roupas</Text>
+        <Text style={styles.categoryTitle}>{categoryName}</Text>
         <Text style={styles.categorySubtitle}>
           Existem {products.length} anúncios para esta categoria na sua região
         </Text>
@@ -89,6 +133,13 @@ export default function CategoriaProduto() {
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.list}
           showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={handleRefresh}
+              colors={["#2A4BA0"]}
+            />
+          }
         />
       </View>
     </View>
@@ -123,5 +174,26 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingBottom: 40,
+  },
+  centerContent: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorText: {
+    color: '#FF3B30',
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  retryButton: {
+    backgroundColor: '#2A4BA0',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 8,
+  },
+  retryButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
