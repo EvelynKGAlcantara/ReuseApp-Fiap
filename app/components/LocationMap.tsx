@@ -58,7 +58,7 @@ export default function LocationMap({
 
   return (
     <View style={styles.container}>
-      {!remove && <Text style={styles.title}>Localização do ofertante</Text>}
+      {!remove && <Text style={styles.title}>Localização</Text>}
 
       <View style={styles.mapContainer}>
         {loading ? (

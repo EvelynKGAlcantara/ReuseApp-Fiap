@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -12,9 +12,15 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import LocationMap from "../components/LocationMap";
 import CustomButton from "@/components/CustomButton";
+import { exchangeCurrency } from "../../services/api/exchange-currency.api.ts";
 
 const ProductDetailsScreen = () => {
   const [isFavorite, setIsFavorite] = React.useState(false);
+  const [usdProductValue, setUsdProductValue] = useState<number | null>(null);
+  const [cadProductValue, setCadProductValue] = useState<number | null>(null);
+  const usdCoin = "USD";
+  const cadCoin = "CAD";
+  const realValue = 40;
 
   const handleBack = () => {
     router.back();
@@ -22,6 +28,12 @@ const ProductDetailsScreen = () => {
 
   const handleFavorite = () => {
     setIsFavorite(!isFavorite);
+  };
+
+  const getForeignValue = async (to: string) => {
+    return await exchangeCurrency(realValue, "BRL", to).then((res) => {
+      return res;
+    });
   };
 
   const renderStars = (rating: number) => {
@@ -43,6 +55,25 @@ const ProductDetailsScreen = () => {
       </View>
     );
   };
+
+  const formatToMoney = (value: number) => {
+    return value.toLocaleString("pt-BR", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
+
+  useEffect(() => {
+    const fetchValue = async () => {
+      const usdValue = await getForeignValue(usdCoin);
+      const cadValue = await getForeignValue(cadCoin);
+
+      setUsdProductValue(usdValue);
+      setCadProductValue(cadValue);
+    };
+
+    fetchValue();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -85,6 +116,24 @@ const ProductDetailsScreen = () => {
         <Text style={styles.productTitle}>Camiseta M, algodão</Text>
         <Text style={styles.productDescription}>Camiseta preta básica.</Text>
 
+        <View style={styles.valueSection}>
+          <Text style={styles.sectionTitle}>Valor para compra</Text>
+          <View style={styles.valueRow}>
+            <Text style={styles.valueTitle}>R$ {formatToMoney(realValue)}</Text>
+            {usdProductValue && (
+              <Text style={styles.valueTitle}>
+                {usdCoin}$ {formatToMoney(usdProductValue)}
+              </Text>
+            )}
+
+            {cadProductValue && (
+              <Text style={styles.valueTitle}>
+                {cadCoin}$ {formatToMoney(cadProductValue)}
+              </Text>
+            )}
+          </View>
+        </View>
+
         {/* Seller Info */}
         <TouchableOpacity
           style={styles.sellerInfo}
@@ -104,8 +153,8 @@ const ProductDetailsScreen = () => {
         </TouchableOpacity>
 
         {/* Location Map */}
+        <Text style={styles.sectionTitle}>Localização do ofertante</Text>
         <View style={styles.mapSection}>
-          <Text style={styles.sectionTitle}>Localização do ofertante</Text>
           <LocationMap
             address="Rua Central"
             number="100"
@@ -241,6 +290,10 @@ const styles = StyleSheet.create({
     color: "#1A1A1A",
     fontWeight: "500",
   },
+  valueSection: {
+    paddingHorizontal: 16,
+    marginBottom: 24,
+  },
   mapSection: {
     paddingHorizontal: 16,
     marginBottom: 24,
@@ -362,6 +415,21 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#f9b023",
   },
+  valueRow: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 20,
+  },
+  valueTitle: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#2A4BA0",
+    marginBottom: 4,
+  },
+  // valueSection: {
+  //   paddingHorizontal: 16,
+  //   marginBottom: 24,
+  // },
 });
 
 export default ProductDetailsScreen;
