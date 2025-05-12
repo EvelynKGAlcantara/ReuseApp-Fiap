@@ -161,21 +161,7 @@ export default function PublicarItem() {
               <Text style={styles.label}>
                 Ou selecione uma imagem do Unsplash:
               </Text>
-              <View style={{ marginBottom: 12 }}>
-                <Text style={styles.label}>Categoria da imagem</Text>
-                <View style={styles.pickerContainer}>
-                  <Picker
-                    selectedValue={unsplashCategory}
-                    onValueChange={setUnsplashCategory}
-                  >
-                    <Picker.Item label="Nenhuma" value="" />
-                    <Picker.Item label="Natureza" value="nature" />
-                    <Picker.Item label="Tecnologia" value="technology" />
-                    <Picker.Item label="Moda" value="fashion" />
-                    <Picker.Item label="Animais" value="animals" />
-                  </Picker>
-                </View>
-              </View>
+
               <View style={styles.searchRow}>
                 <View style={styles.searchContainer}>
                   <TextInput
@@ -190,6 +176,40 @@ export default function PublicarItem() {
                   >
                     <Ionicons name="search" size={24} color="#2A4BA0" />
                   </TouchableOpacity>
+                </View>
+
+                <View style={styles.smallPickerContainer}>
+                  <Picker
+                    selectedValue={category}
+                    onValueChange={setCategory}
+                    style={styles.smallPicker}
+                  >
+                    <Picker.Item label="Selecione" value="" />
+                    <Picker.Item label="Roupas" value="roupas" />
+                    <Picker.Item label="Calçados" value="calcados" />
+                    <Picker.Item label="Eletrônicos" value="eletronicos" />
+                    <Picker.Item label="Livros" value="livros" />
+                  </Picker>
+                </View>
+              </View>
+              <View style={{ marginBottom: 12 }}>
+                <Text style={styles.label}>Categoria da imagem</Text>
+                <View style={styles.pickerContainer}>
+                  <Picker
+                    selectedValue={unsplashCategory}
+                    onValueChange={setUnsplashCategory}
+                  >
+                    <Picker.Item label="Nenhuma" value="" />
+                    <Picker.Item label="Moda" value="fashion" />
+                    <Picker.Item label="Papelaria" value="paper" />
+                    <Picker.Item label="Brinquedos" value="toys" />
+                    <Picker.Item label="Itens de casa" value="home" />
+                    <Picker.Item label="Arte" value="art" />
+                    <Picker.Item label="Jardinagem" value="gardening" />
+                    <Picker.Item label="Esportes" value="sports" />
+                    <Picker.Item label="Livros e Literatura" value="books" />
+                    <Picker.Item label="Tecnologia" value="technology" />
+                  </Picker>
                 </View>
               </View>
 
@@ -223,10 +243,18 @@ export default function PublicarItem() {
                 />
               )}
 
-              <Text style={{ fontSize: 12, color: "#666", marginTop: 8 }}>
-                Imagens do Unsplash aparecerão com a tag "Imagem Meramente
-                Ilustrativa" aos usuários.
-              </Text>
+              <View style={styles.infoBox}>
+                <Ionicons
+                  name="information-circle-outline"
+                  size={20}
+                  color="#2A4BA0"
+                  style={styles.infoIcon}
+                />
+                <Text style={styles.unsplashNotice}>
+                  Imagens do Unsplash aparecerão com a tag "Imagem Meramente
+                  Ilustrativa" aos usuários.
+                </Text>
+              </View>
 
               <View style={styles.buttonStyle}>
                 <CustomButton
@@ -294,8 +322,17 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 8,
   },
+  smallPickerContainer: {
+    width: 120,
+    marginLeft: 8,
+  },
+  smallPicker: {
+    height: 40,
+  },
   searchRow: {
     marginBottom: 12,
+    flexDirection: "row",
+    alignItems: "center",
   },
   searchContainer: {
     flexDirection: "row",
@@ -311,5 +348,23 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#000",
     marginRight: 8,
+  },
+  infoBox: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    backgroundColor: "rgba(42, 75, 160, 0.1)",
+    borderRadius: 8,
+    padding: 10,
+    marginTop: 8,
+    marginBottom: 20,
+  },
+  infoIcon: {
+    marginRight: 8,
+    marginTop: 2,
+  },
+  unsplashNotice: {
+    flex: 1,
+    fontSize: 14,
+    color: "#2A4BA0",
   },
 });

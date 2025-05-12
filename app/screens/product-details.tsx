@@ -20,7 +20,7 @@ const ProductDetailsScreen = () => {
   const [cadProductValue, setCadProductValue] = useState<number | null>(null);
   const usdCoin = "USD";
   const cadCoin = "CAD";
-  const realValue = 40;
+  const realValue = 70;
 
   const handleBack = () => {
     router.back();
@@ -117,7 +117,7 @@ const ProductDetailsScreen = () => {
         <Text style={styles.productDescription}>Camiseta preta básica.</Text>
 
         <View style={styles.valueSection}>
-          <Text style={styles.sectionTitle}>Valor para compra</Text>
+          <Text style={styles.sectionTitle}>Valor para Compra:</Text>
           <View style={styles.valueRow}>
             <Text style={styles.valueTitle}>R$ {formatToMoney(realValue)}</Text>
             {usdProductValue && (
