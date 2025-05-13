@@ -8,6 +8,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "reuse-app",
     "userInterfaceStyle": "automatic",
+    "sdkVersion": "53.0.0",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
@@ -49,7 +50,9 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "expo-facebook"
+      "expo-facebook",
+      "expo-font",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true

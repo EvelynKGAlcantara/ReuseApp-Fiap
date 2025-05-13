@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -15,6 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Header } from "../../components/Header";
 import Cabecalho from "../components/header/cabecalho";
+import { getCacheData, setCacheData } from "../../services/storage";
 
 // Componente de categoria
 type Categoria = {
@@ -24,6 +25,53 @@ type Categoria = {
 };
 
 export default function PerfilScreen() {
+  const [userProfile, setUserProfile] = useState(null);
+  const [userProducts, setUserProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadUserData();
+  }, []);
+
+  const loadUserData = async () => {
+    try {
+      // Tenta carregar perfil do cache
+      const cachedProfile = await getCacheData('@cache_user_profile');
+      if (cachedProfile) {
+        setUserProfile(cachedProfile);
+      }
+
+      // Tenta carregar produtos do cache
+      const cachedProducts = await getCacheData('@cache_user_products');
+      if (cachedProducts) {
+        setUserProducts(cachedProducts);
+      }
+
+      // Se não houver cache, carrega da API
+      // Aqui você deve substituir pela sua chamada real à API
+      const [profileResponse, productsResponse] = await Promise.all([
+        fetch('sua-api/usuario/perfil'),
+        fetch('sua-api/usuario/produtos')
+      ]);
+
+      const profileData = await profileResponse.json();
+      const productsData = await productsResponse.json();
+      
+      // Salva no cache
+      await Promise.all([
+        setCacheData('@cache_user_profile', profileData),
+        setCacheData('@cache_user_products', productsData)
+      ]);
+
+      setUserProfile(profileData);
+      setUserProducts(productsData);
+    } catch (error) {
+      console.error('Erro ao carregar dados do usuário:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleLogout = () => {
     router.replace("/login");
   };

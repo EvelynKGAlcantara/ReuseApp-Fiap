@@ -7,12 +7,15 @@ import {
   ScrollView,
   TouchableOpacity,
   StatusBar,
+  ActivityIndicator,
+  RefreshControl,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import LocationMap from "../components/LocationMap";
 import CustomButton from "@/components/CustomButton";
 import { exchangeCurrency } from "../../services/api/exchange-currency.api.ts";
+import { getCacheData, setCacheData } from "../../services/storage";
 
 const ProductDetailsScreen = () => {
   const [isFavorite, setIsFavorite] = React.useState(false);
@@ -21,6 +24,54 @@ const ProductDetailsScreen = () => {
   const usdCoin = "USD";
   const cadCoin = "CAD";
   const realValue = 70;
+
+  const [productDetails, setProductDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    loadProductDetails();
+  }, []);
+
+  const loadProductDetails = async (forceRefresh = false) => {
+    try {
+      setError(null);
+      
+      if (!forceRefresh) {
+        // Tenta carregar do cache primeiro
+        const cachedProduct = await getCacheData('@cache_product_details');
+        if (cachedProduct) {
+          setProductDetails(cachedProduct);
+          setLoading(false);
+          return;
+        }
+      }
+
+      // Se não houver cache ou forceRefresh for true, carrega da API
+      const response = await fetch('sua-api/produto/detalhes');
+      if (!response.ok) {
+        throw new Error('Erro ao carregar detalhes do produto');
+      }
+      
+      const data = await response.json();
+      
+      // Salva no cache
+      await setCacheData('@cache_product_details', data);
+      setProductDetails(data);
+    } catch (error) {
+      console.error('Erro ao carregar detalhes do produto:', error);
+      setError('Não foi possível carregar os detalhes do produto. Tente novamente.');
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    loadProductDetails(true);
+  };
 
   const handleBack = () => {
     router.back();
@@ -74,6 +125,24 @@ const ProductDetailsScreen = () => {
 
     fetchValue();
   }, []);
+  if (loading) {
+    return (
+      <View style={[styles.container, styles.centerContent]}>
+        <ActivityIndicator size="large" color="#2A4BA0" />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={[styles.container, styles.centerContent]}>
+        <Text style={styles.errorText}>{error}</Text>
+        <TouchableOpacity style={styles.retryButton} onPress={() => loadProductDetails(true)}>
+          <Text style={styles.retryButtonText}>Tentar Novamente</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -96,7 +165,17 @@ const ProductDetailsScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView 
+        style={styles.content} 
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={handleRefresh}
+            colors={["#2A4BA0"]}
+          />
+        }
+      >
         {/* Product Image Container */}
         <View style={styles.productImageContainer}>
           <Image
@@ -430,6 +509,27 @@ const styles = StyleSheet.create({
   //   paddingHorizontal: 16,
   //   marginBottom: 24,
   // },
+  centerContent: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorText: {
+    color: '#FF3B30',
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  retryButton: {
+    backgroundColor: '#2A4BA0',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 8,
+  },
+  retryButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+  },
 });
 
 export default ProductDetailsScreen;
