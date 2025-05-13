@@ -1,8 +1,9 @@
-import { getData } from "@/services/storage";
-import { Ionicons } from "@expo/vector-icons";
-import { Tabs, useRouter } from "expo-router";
-import React, { useEffect } from "react";
-import { Platform } from "react-native";
+import React, { useEffect } from 'react';
+import { Platform } from 'react-native';
+import { Tabs } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { useAuth } from '../../context/AuthContext';
+import { useRouter } from 'expo-router';
 
 export const screenOptions = {
   headerShown: false,
@@ -10,18 +11,17 @@ export const screenOptions = {
 
 export default function TabLayout() {
   const router = useRouter();
-
-  const validateLogin = async () => {
-    const userToken = await getData('@user_token');
-
-    if (!userToken) {
-      router.replace("/login");
-    }
-  };
+  const { signed, loading } = useAuth();
 
   useEffect(() => {
-    validateLogin();
-  }, []);
+    if (!loading && !signed) {
+      router.replace('/login');
+    }
+  }, [loading, signed]);
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <Tabs
