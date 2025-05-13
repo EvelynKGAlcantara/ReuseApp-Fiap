@@ -2,6 +2,7 @@
   "expo": {
     "name": "reuse-app",
     "slug": "reuse-app",
+    "owner": "reuseapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -9,7 +10,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.reuseapp"
     },
     "android": {
       "permissions": [
@@ -27,7 +29,9 @@
         "googleMaps": {
           "apiKey": "AIzaSyBFLLWPsj2lsutXtbG_MrDLroV6c5ZPkcA"
         }
-      }
+      },
+      "package": "com.reuseapp",
+      "versionCode": 1
     },
     "web": {
       "bundler": "metro",

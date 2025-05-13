@@ -1,4 +1,6 @@
 import { useAuth } from "@/context/AuthContext";
+import { useFacebookAuth } from "@/services/facebook";
+import { useGoogleAuth } from "@/services/google";
 import { setData } from "@/services/storage";
 import { Ionicons } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
@@ -11,15 +13,17 @@ import {
   View,
 } from "react-native";
 
-
 const LoginScreen = () => {
+  const { setIsLoggedIn } = useAuth();
+  const router = useRouter();
+
+  const { promptAsync } = useGoogleAuth();
+  const { facebookAuth } = useFacebookAuth();
+
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [btnAtivo, setBtnAtivo] = useState(false);
-
-  const { setIsLoggedIn } = useAuth();
-  const router = useRouter();
 
   const alternarMostrarSenha = () => {
     setMostrarSenha(!mostrarSenha);
@@ -35,13 +39,29 @@ const LoginScreen = () => {
 
   const handleLogin = async () => {
     try {
-      await setData('@user_email', email);
-      await setData('@user_token', 'fake-jwt-token');
+      await setData("@userData", email);
+      await setData("@userToken", "fake-jwt-token");
 
       setIsLoggedIn(true);
       router.replace("/(tabs)");
     } catch (e) {
       console.error("Erro ao armazenar dados no AsyncStorage", e);
+    }
+  };
+
+  const loginWithGoogle = async () => {
+    try {
+      await promptAsync();
+    } catch (e) {
+      alert("Erro ao tentar login com o Google");
+    }
+  };
+
+  const loginWithFacebook = async () => {
+    try {
+      await facebookAuth();
+    } catch (e) {
+      alert("Erro ao tentar login com o Facebook");
     }
   };
 
@@ -110,11 +130,7 @@ const LoginScreen = () => {
         <TouchableOpacity
           style={[styles.loginButton, btnAtivo && styles.loginButtonActive]}
           activeOpacity={0.8}
-          onPress={() => {
-            setBtnAtivo(true);
-            handleLogin();
-          }}
-          // disabled={!btnAtivo}
+          onPress={handleLogin}
         >
           <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>
@@ -123,7 +139,11 @@ const LoginScreen = () => {
           <Text style={styles.orText}>ou</Text>
         </View>
 
-        <TouchableOpacity style={styles.googleButton} activeOpacity={0.8}>
+        <TouchableOpacity
+          style={styles.googleButton}
+          activeOpacity={0.8}
+          onPress={loginWithGoogle}
+        >
           <Ionicons
             name="logo-google"
             size={18}
@@ -133,7 +153,11 @@ const LoginScreen = () => {
           <Text style={styles.googleButtonText}>Login com Google</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.facebookButton} activeOpacity={0.8}>
+        <TouchableOpacity
+          style={styles.facebookButton}
+          activeOpacity={0.8}
+          onPress={loginWithFacebook}
+        >
           <Ionicons
             name="logo-facebook"
             size={18}
